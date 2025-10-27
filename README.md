@@ -60,12 +60,10 @@ Improved to match real-world procurement flow.
    ```
 
 2. **🗂️ Move Project Files**
-
-Place the project folder into your web server root (for XAMPP):
-
-```bash
-C:\xampp\htdocs\Library Management System
-```
+   Place the project folder into your web server root (for XAMPP):
+   ```bash
+   C:\xampp\htdocs\Library Management System
+   ```
 
 ---
 
@@ -110,10 +108,10 @@ Open your browser and go to:
 
 ---
 
-## 🔑 Admin Login
+### 🔑 Admin Login
 
-  **Username:** admin
-  **Password:** admin
+**Username:** admin  
+**Password:** admin
 
 ---
 
