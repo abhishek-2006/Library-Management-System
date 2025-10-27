@@ -57,7 +57,7 @@ Improved to match real-world procurement flow.
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/abhishek-2006/Library-Management-System.git
-
+   ```
 
 2. **🗂️ Move Project Files**
 
@@ -112,8 +112,8 @@ Open your browser and go to:
 
 ## 🔑 Admin Login
 
-Username: admin
-Password: admin
+  Username: admin
+  Password: admin
 
 ---
 
