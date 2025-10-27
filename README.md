@@ -112,8 +112,8 @@ Open your browser and go to:
 
 ## 🔑 Admin Login
 
-  Username: admin
-  Password: admin
+  **Username:** admin
+  **Password:** admin
 
 ---
 
