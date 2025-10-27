@@ -104,7 +104,7 @@ $dbh = new PDO("mysql:host=localhost;dbname=library", "root", "");
 ## 🚀 Run the Application
 
 Open your browser and go to:
-👉 [http://localhost/Library%20Management%20System/library/](http://localhost/Library%20Management%20System/library/)
+👉 [http://localhost/Library%20Management%20System/](http://localhost/Library%20Management%20System/)
 
 ---
 
