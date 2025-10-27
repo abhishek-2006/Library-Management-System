@@ -1,0 +1,1375 @@
+﻿/* GLOBAL VARIABLES & RESET */
+:root { 
+    /* Color Palette */
+    --primary-indigo: #4f46e5;      /* Main brand color */
+    --info-blue: #3B82F6;           /* Info card/state */
+    --accent-orange: #f97316;       /* Accent color for highlights/active states */
+    --danger-red: #dc2626;          /* Danger/Penalty card/state */
+    --success-green: #10b981;       /* Success card/state */
+    --warning-yellow: #F59E0B;      /* Warning card/state */
+    --danger-bg: #FEE2E2;           
+    --success-bg: #D1FAE5;          
+    
+    /* Backgrounds & Text */
+    --bg-light: #f9fafb;            
+    --text-dark: #1f2937;           
+    --text-gray: #6c757d;           
+    
+    /* Header/Nav Glass Effect */
+    --glass-bg: rgba(255, 255, 255, 0.95); 
+    --glass-border: rgba(255, 255, 255, 0.35);
+    
+    /* Footer */
+    --footer-bg: #0f172a;           
+    --footer-text: #9ca3af;         
+    --footer-hover: #f59e0b;        
+
+    /* General */
+    --border-radius: 6px;
+    
+    /* Quick Access Card Border Colors */
+    --qa-border-green: #22C55E; 
+    --qa-border-orange: #F97316; 
+    --qa-border-indigo: #4F46E5;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", "Roboto", "sans-serif";
+    margin: 0;
+    background: linear-gradient(180deg, #eef2ff 0%, #f9fafb 50%, #f9fafb 100%); 
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+.content-wrapper { 
+    flex-grow: 1; 
+    padding: 2.5rem 0; 
+    background: var(--bg-light); 
+    padding-top: 30px; 
+    padding-bottom: 50px;
+}
+.container-custom { 
+    max-width: 1300px; 
+    margin: 0 auto; 
+    padding: 0 15px; 
+}
+
+/* HEADER & NAVIGATION */
+.main-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: var(--glass-bg);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 5rem;
+    padding: 0 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+/* LOGO STYLING */
+.brand-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    text-decoration: none;
+    color: var(--primary-indigo);
+    letter-spacing: -0.03em;
+    transition: transform 0.3s ease-out; 
+}
+.brand-logo:hover {
+    transform: scale(1.02); 
+}
+.stat-logo-icon {
+    font-size: 2.0rem; 
+    color: var(--primary-indigo); 
+    margin-right: 8px;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+.brand-logo:hover .stat-logo-icon {
+    color: var(--accent-orange);
+    text-shadow: 0 0 8px rgba(249, 115, 22, 0.5); 
+}
+
+/* USER INFO STYLES */
+.user-greeting {
+    margin-right: 1.5rem;
+    font-weight: 500;
+    color: var(--text-dark); 
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.user-name-display {
+    font-weight: 700;
+    color: var(--primary-indigo);
+}
+.logout-btn {
+    background: var(--danger-red);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.logout-btn:hover {
+    background: #b91c1c;
+    transform: scale(1.05);
+}
+.logout-btn i { font-size: 0.9em; }
+
+/* === NAVIGATION MENU === */
+.menu-section {
+    background: var(--primary-indigo); 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+.menu-nav {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    height: 3.5rem; 
+    padding: 0 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+.nav-link, .dropdown-btn { 
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s;
+    padding: 0 0.1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+}
+.nav-link i, .dropdown-btn i {
+    margin-right: 5px;
+}
+
+/* ACTIVE LINK STYLE */
+.active-link {
+    border-bottom: 3px solid var(--accent-orange);
+    padding-bottom: 0.1rem; 
+    z-index: 2;
+}
+
+/* HOVER EFFECT */
+.nav-link:not(.active-link):hover {
+    color: white;
+    border-bottom: 3px solid var(--accent-orange);
+    padding-bottom: 0.1rem;
+    box-shadow: 0 4px 0 -1px var(--accent-orange);
+}
+
+/* DROPDOWN */
+.dropdown { position: relative; height: 100%; display: flex; align-items: center; }
+.dropdown-btn { 
+    background: none; border: none; cursor: pointer; gap: 0.5rem; 
+    padding-bottom: 0.1rem; margin: 0; color: white; 
+}
+.dropdown-btn i { transition: transform 0.3s; }
+.dropdown:hover .dropdown-btn i { transform: rotate(180deg); color: var(--accent-orange); }
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 3.5rem;
+    left: 0;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    min-width: 12rem;
+    overflow: hidden;
+    border-top: 4px solid var(--accent-orange);
+    z-index: 60;
+}
+.dropdown:hover .dropdown-menu { display: block; }
+.dropdown-item {
+    padding: 0.75rem 1rem;
+    display: block;
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: 0.2s;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.dropdown-item:hover {
+    background: #f3f4f6;
+    color: var(--primary-indigo);
+}
+.dropdown-divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 0 10px;
+}
+
+
+/* DASHBOARD & COMMON CONTENT STYLES */
+.header-title-main { 
+    font-size: 2.2rem; 
+    font-weight: 700; 
+    color: var(--text-dark); 
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--accent-orange);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+.header-title-sub { 
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Stat Cards Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 25px;
+    margin-bottom: 40px;
+}
+.stat-card {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    text-align: center;
+    padding: 30px 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-dark);
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee; 
+}
+.stat-card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+.stat-icon {
+    font-size: 3.5rem; 
+    margin-bottom: 10px;
+    opacity: 0.75;
+}
+.stat-value {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-top: 5px;
+}
+.stat-label {
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
+    color: var(--text-gray);
+}
+
+/* Card Color Overrides */
+.card-info .stat-icon { color: var(--info-blue); }
+.card-warning .stat-icon { color: var(--warning-yellow); }
+.card-danger .stat-icon { color: var(--danger-red); }
+.card-success .stat-icon { color: var(--success-green); }
+
+
+/* QUICK ACCESS SECTION STYLES (With Left Border) */
+.quick-access-section {
+    padding-top: 20px;
+}
+.quick-access-grid { 
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding-bottom: 40px;
+}
+/* QUICK ACCESS CARD STYLES (Refined for Bold Statistics) */
+.feature-card {
+    display: block;
+    padding: 30px 25px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Stronger shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #343a40;
+    border-left: 5px solid transparent; 
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
+}
+.feature-icon {
+    font-size: 3.5rem; 
+    margin-bottom: 15px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.85; /* Slight opacity for a modern look */
+}
+.feature-value {
+    font-size: 2.8rem; 
+    font-weight: 800;
+    line-height: 1.1;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 5px;
+    color: var(--text-dark); /* Ensure number is dark */
+}
+.feature-label {
+    /* Adjusted for a clear, uppercase label */
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #6c757d;
+    text-transform: uppercase;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    letter-spacing: 0.5px;
+    margin-bottom: 0; /* Clear up unnecessary bottom margin */
+}
+
+/* Feature Card Colors (Borders and Icons) */
+.feature-green { border-left-color: #22C55E; }
+.feature-green .feature-icon { color: #22C55E; }
+.feature-orange { border-left-color: #F97316; }
+.feature-orange .feature-icon { color: #F97316; }
+.feature-indigo { border-left-color: #4F46E5; }
+.feature-indigo .feature-icon { color: #4F46E5; }
+.feature-red { border-left-color: #dc2626;}
+.feature-red .feature-icon { color: #dc2626;}
+.feature-blue { border-left-color: #007bff;}
+.feature-blue .feature-icon {color: #007bff;}
+
+/* FOOTER STYLES */
+.footer-wrapper { 
+    background: var(--footer-bg); 
+    color: var(--footer-text); 
+    padding: 20px 0; 
+    text-align: center; 
+    margin-top: auto; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    font-size: 16px; 
+    font-weight: 400;
+    border-top: 5px solid var(--accent-orange);
+}
+.footer-wrapper a { 
+    color: var(--accent-orange); 
+    text-decoration: none; 
+    font-weight: 700;
+    border-bottom: 2px solid transparent; 
+    transition: 0.3s ease-in-out; 
+    padding-bottom: 2px;
+    margin-left: 5px; 
+}
+.footer-wrapper a:hover { 
+    color: var(--footer-hover); 
+    border-color: var(--footer-hover); 
+}
+.footer-text-content {
+    max-width: 1200px;
+    padding: 0 15px;
+}
+
+
+/* =================================================================
+   RESPONSIVENESS (Media Queries)
+   ================================================================= */
+@media (max-width: 1024px) {
+    .dashboard-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .quick-access-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .menu-nav { gap: 1rem; } 
+}
+
+@media (max-width: 768px) {
+    .header-content { padding: 0 1rem; }
+    .menu-nav { padding: 0 1rem; }
+    .user-greeting { display: none; } 
+    .dashboard-grid { 
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+    .quick-access-grid { 
+        grid-template-columns: 1fr; 
+    }
+}
+
+@media (max-width: 580px) {
+    .main-header { height: 100px; }
+    .header-content { flex-direction: column; height: auto; padding: 1rem; }
+    .brand-logo { margin-bottom: 10px; }
+    .menu-nav { 
+        justify-content: space-around; 
+        gap: 10px;
+        flex-wrap: wrap; 
+        height: auto;
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+}
+
+/* =================================================================
+    MANAGE-BOOKS.PHP
+   ================================================================= */
+
+/* --- 1. GLOBAL VARIABLES & BASE RESET --- */
+:root {
+    --primary-indigo: #4f46e5;      /* Main brand color */
+    --accent-orange: #f97316;       /* Highlight color */
+    --danger-red: #dc2626;          
+    --bg-light: #f9fafb;            /* Content background */
+    --text-dark: #1f2937;           /* Dark text */
+    --text-gray: #6c757d;           
+    --border-radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+.container { 
+    max-width: 1300px; 
+    margin: 0 auto; 
+    padding: 0 15px; 
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -15px; 
+    margin-right: -15px;
+}
+.col-md-12 { width: 100%; padding-left: 15px; padding-right: 15px; margin-bottom: 20px; }
+.col-md-6 { width: 50%; padding-left: 15px; padding-right: 15px; margin-bottom: 20px; }
+.col-md-4 { width: 33.3333%; padding-left: 15px; padding-right: 15px; margin-bottom: 20px; }
+.col-md-8 { width: 66.6666%; padding-left: 15px; padding-right: 15px; margin-bottom: 20px; }
+.col-md-10 { width: 83.3333%; padding-left: 15px; padding-right: 15px; margin-bottom: 20px; }
+
+.col-md-offset-1 {
+    /* If the HTML still uses col-md-offset-x, this ensures it works for centering */
+    margin-left: auto;
+    margin-right: auto;
+    float: none; /* Override old float behavior */
+}
+/* Ensure the row containing the main content is centered */
+.row.pad-botm { /* This is the row containing the H4 title */
+    margin-bottom: 30px;
+}
+/* Add a style to ensure the specific form row centers the content */
+.row .col-md-10 {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- 3. PANEL/CARD STYLES (Table Container) --- */
+/* 2. PANEL/CARD STYLES (Refined for Form) */
+.panel-default {
+    background: #ffffff; /* Explicitly white */
+    border: 1px solid #d3dce6; /* Lighter border */
+    border-radius: 12px; /* Slightly larger border radius for modern feel */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1); /* Stronger, professional shadow */
+    margin-bottom: 30px;
+}
+
+.panel-heading {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    border-bottom: 3px solid var(--primary-indigo); 
+    background: #fafafa; /* Very slight blue tint */
+    border-top-left-radius: 12px; 
+    border-top-right-radius: 12px;    
+    border-radius: 12px 12px 0 0;
+    padding: 15px 20px;
+}
+
+.panel-body {
+    padding: 30px;
+}
+
+/* 3. FORM & INPUT STYLES (Refined) */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+/* Image/Thumbnail Styling for the Edit Page */
+.img-thumbnail-lg {
+    max-width: 150px;
+    height: auto;
+    border: 2px solid var(--primary-indigo);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 4. CUSTOM TABLE STYLES --- */
+.custom-table { 
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 0; 
+    color: var(--text-dark);
+}
+.custom-table th, .custom-table td {
+    padding: 14px 18px; 
+    vertical-align: middle; 
+    border-bottom: 1px solid #f0f0f0; /* Soft horizontal dividers */
+    text-align: left; 
+    font-size: 0.95rem;
+}
+.custom-table thead th {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-indigo); 
+    background-color: #f5f6ff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid var(--primary-indigo); /* Strong header separation */
+}
+.custom-table tbody tr { transition: background-color 0.2s; }
+.custom-table tbody tr:hover { background-color: #f8faff; }
+
+/* Alignment for table content */
+.custom-table td.center { text-align: center; }
+.custom-table td:last-child { text-align: center; } /* Center Action column buttons */
+
+/* --- 5. CUSTOM BUTTONS --- */
+.custom-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 15px;
+    margin: 4px 6px; 
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    text-decoration: none;
+}
+.custom-btn i { margin-right: 6px; font-size: 1em; }
+.custom-btn:hover { transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+
+/* Primary Button (Edit) */
+.btn-primary-theme { 
+    background-color: var(--primary-indigo); 
+    color: white; 
+}
+.btn-primary-theme:hover { background-color: #3f36c5; }
+
+/* Danger Button (Delete) */
+.btn-danger-theme { 
+    background-color: var(--danger-red); 
+    color: white; 
+}
+.btn-danger-theme:hover { background-color: #b91c1c; }
+
+
+/* --- 6. ALERT MESSAGES --- */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 4px solid transparent;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 500;
+}
+.alert strong { font-weight: 700; margin-right: 5px; }
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+.alert-success {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border-color: #bee5eb;
+}
+
+.alert-error { 
+    background-color: #fee2e2; 
+    border-color: #fecaca; 
+    color: #991b1b; 
+}
+
+/* --- Stock Badge for Copies Column --- */
+.stock-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+/* Color definitions */
+.stock-high {
+    background-color: #d1fae5; /* Very light green */
+    color: #047857; /* Dark green text */
+}
+
+.stock-low {
+    background-color: #ffedd5; /* Very light yellow/orange */
+    color: #b45309; /* Dark orange text */
+}
+
+.stock-out {
+    background-color: #fee2e2; /* Very light red */
+    color: #b91c1c; /* Dark red text */
+}
+
+/* --- Table Column Specificity --- */
+.custom-table th.image-col-head {
+    width: 80px; /* Give the header a fixed, narrow width */
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.custom-table td.image-col {
+    width: 80px; /* Give the column data cell a fixed, narrow width */
+    text-align: center;
+    padding: 8px; /* Reduce padding slightly for a tighter fit */
+}
+
+/* --- Image Thumbnail Styles --- */
+.book-cover-thumb {
+    width: 50px; 
+    height: 70px; 
+    object-fit: cover; 
+    border-radius: 4px;
+    border: 1px solid #e0e0e0; 
+    display: block; 
+    margin: 0 auto; 
+    transition: transform 0.2s;
+}
+.book-cover-thumb:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+/* FORM & INPUT STYLES (For edit-book.php) */
+.form-control, 
+select.form-control,
+textarea.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: var(--border-radius);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    height: 40px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.form-control:focus,
+select.form-control:focus,
+textarea.form-control:focus {
+    color: var(--text-dark);
+    background-color: #fff;
+    border-color: var(--primary-indigo);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.help-block {
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.btn-secondary-theme {
+    background-color: #6c757d; /* Dark gray */
+    color: white;
+}
+.btn-secondary-theme:hover {
+    background-color: #5a6268;
+}
+
+/* 4. FILE INPUT STYLES (Custom Button) */
+
+.custom-file-input {
+    display: none; 
+}
+
+/* Container for the custom styled elements */
+.custom-file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+}
+
+/* The button label that users click */
+.custom-file-upload-label {
+    background-color: #f7f9fd; /* Light background */
+    color: var(--primary-indigo); /* Blue text */
+    padding: 10px 15px;
+    border: 1px solid var(--primary-indigo);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.custom-file-upload-label:hover {
+    background-color: #eef2ff; /* Lighter on hover */
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+}
+
+/* The text display area for the selected file name */
+#file-chosen-text {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 120px);
+}
+
+.page-header-wrapper {
+    padding-bottom: 20px;
+}
+
+.message-wrapper {
+    margin-bottom: 20px;
+}
+
+.message-wrapper .alert {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.form-container-wrapper {
+    width: 50%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
+}
+.header-line { 
+    font-size: 2rem; 
+    font-weight: 700; 
+    color: #1a202c; 
+    border-bottom: 3px solid #6366f1;
+    padding-bottom: 10px; 
+    margin-bottom: 30px;
+    display: inline-block;
+    width: auto;
+}
+
+/* Panel/Card Styling (Main Form Container) */
+.panel-default { 
+    border: none; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    border-radius: 12px; 
+    background: #ffffff;
+}
+
+.update-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.2s, box-shadow 0.2s;
+    color: #ffffff;
+    background-color: #10b981; /* Green from the success message */
+    margin-top: 20px;
+}
+.update-btn i {
+    margin-right: 8px;
+}
+.update-btn:hover {
+    background-color: #059669;
+    box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+}
+
+.back-link {
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 16px;
+    color: #6366f1;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+.back-link:hover {
+    color: #4338ca;
+    text-decoration: underline;
+}
+.back-link i {
+    margin-right: 5px;
+}        
+/* Message Styling (Success/Error Banners) */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 500;
+}
+.alert-success {
+    background-color: #d1fae5;
+    border-color: #a7f3d0;
+    color: #065f46;
+}
+.alert-error, .alert-danger { /* For the 'Student ID not found.' error */
+    background-color: #fee2e2;
+    border-color: #fecaca;
+    color: #991b1b;
+}
+
+.form-container-wrapper.large-form {
+    width: 70%;
+    max-width: 750px;
+}
+
+@media (max-width: 768px) {
+    .form-container-wrapper, .form-container-wrapper.large-form {
+        width: 100%;
+    }
+}
+
+.form-control[name="description"] {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* ----------------------------------------------------------------- */
+/* --- Image Preview Container Styles --- */
+/* ----------------------------------------------------------------- */
+.image-preview-container {
+    width: 120px; /* Small fixed width */
+    height: 150px; /* Small fixed height (adjust as needed) */
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-preview-container img {
+    /* Ensure the image scales neatly within the container */
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Prevents stretching */
+}
+
+/* Adjust the custom file input layout slightly */
+.custom-file-upload-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Redefine the file label/button to match previous styling, if needed */
+.custom-file-upload-label {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #5bc0de;
+    border: 1px solid #46b8da;
+    transition: background-color 0.2s;
+    margin-right: 15px; 
+}
+.custom-file-upload-label .fa {
+    margin-right: 8px;
+}
+.custom-file-upload-label:hover {
+    background-color: #31b0d5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-pending {
+    padding: 3px 6px;
+    border-radius: 4px;
+    background-color: #f0ad4e; /* Yellow/Orange */
+    color: #fff;
+    font-size: 12px;
+}
+.status-approved {
+    padding: 3px 6px;
+    border-radius: 4px;
+    background-color: #5cb85c; /* Green */
+    color: #fff;
+    font-size: 12px;
+}
+.status-rejected {
+    padding: 3px 6px;
+    border-radius: 4px;
+    background-color: #d9534f; /* Red */
+    color: #fff;
+    font-size: 12px;
+}
+.action-date-display {
+    display: block;
+    font-size: 10px;
+    color: #888;
+    margin-top: 5px;
+}
+
+.label-danger { background-color: #d9534f; }
+.label-success { background-color: #5cb85c; }
+
+/* Panel/Card Styling */
+/*
+ * Admin Book Requests Styles
+ * Used for manage-book-requests.php to visually enhance the request list.
+ */
+
+/* General Card/Panel Styling */
+.panel {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Table Enhancements */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.table th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #34495e; /* Darker header text */
+    background-color: #ecf0f1; /* Light grey header background */
+    border-bottom: 2px solid #ddd !important;
+    padding: 12px 10px;
+}
+
+/* Highlighting for Pending Requests */
+.pending-request-row {
+    font-weight: 600; 
+    background-color: #fcfcfc;
+    border-left: 5px solid #3498db;
+    transition: background-color 0.3s;
+}
+
+.pending-request-row {
+    background-color: #f0f8ff;
+}
+
+/* Status Badges - Pill Shape */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 50px; 
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    min-width: 80px; 
+    text-align: center;
+    color: white;
+}
+.status-badge.pending { 
+    background-color: #f39c12; /* Yellow/Orange */
+} 
+.status-badge.approved { 
+    background-color: #2ecc71; /* Emerald Green */
+} 
+.status-badge.rejected { 
+    background-color: #e74c3c; /* Flat Red */
+} 
+
+/* Action Buttons - Modern Look */
+.action-btns {
+    white-space: nowrap; 
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.action-btns .btn {
+    border: none; 
+    border-radius: 6px; 
+    padding: 7px 10px; 
+    font-size: 0.85em;
+    font-weight: 600; 
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    cursor: pointer;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btns .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); 
+    opacity: 0.95;
+}
+
+.action-btns .btn i {
+    margin-right: 5px; 
+    font-size: 1.0em; 
+}
+
+/* Approve Button */
+.action-btns .btn-success {
+    background-color: #27ae60; 
+    color: white;
+}
+
+/* Reject Button */
+.action-btns .btn-danger {
+    background-color: #c0392b; 
+    color: white;
+}
+
+/* Processed Button (for requests already actioned) */
+.action-btns .btn-info {
+    background-color: #bdc3c7; /* Light grey */
+    color: #34495e;
+    cursor: default;
+    box-shadow: none;
+    text-transform: capitalize;
+}
+.action-btns .btn-info:hover {
+    transform: translateY(0);
+    box-shadow: none;
+    opacity: 1;
+}
+
+/* View Reason Button (using default light grey for secondary action) */
+.action-btns .btn-default {
+    background-color: #ecf0f1;
+    color: #34495e;
+    text-transform: capitalize;
+}
+
+.action-btns .btn-default:hover {
+    background-color: #d8e0e6;
+}
+/* Highlighting for unread messages */
+.unread-message-row {
+    font-weight: 600; 
+    background-color: #fefee3; /* Very light, professional yellow */
+    border-left: 5px solid #ffc107; /* Clear visual marker */
+}
+
+/* Table Enhancements */
+.table th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    color: #5a5a5a;
+    border-bottom: 2px solid #ddd !important;
+}
+
+/* Style for the short message preview text */
+.message-preview {
+    font-weight: 500; 
+    font-size: 0.9em;
+    color: #888; 
+    margin-top: 5px;
+    display: block;
+    line-height: 1.4;
+}
+
+/* Style for the message title (now a clickable link in the UI) */
+.message-title a {
+    color: #007bff; /* Primary blue for links/titles */
+    text-decoration: none;
+    font-weight: 600;
+}
+.message-title a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Status Badges - Flat Design */
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 50px; /* Pill shape */
+    font-size: 0.8em;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    min-width: 70px; /* Consistent width */
+    text-align: center;
+}
+.status-badge.new { 
+    background-color: #ff4757;
+    color: white; 
+} 
+.status-badge.read { 
+    background-color: #2ed573;
+    color: white; 
+} 
+
+/* ACTION BUTTONS - NEW MODERN STYLES */
+.action-btns {
+    white-space: nowrap; 
+    display: flex;
+    gap: 6px;
+    justify-content: flex-start;
+    align-items: center; 
+    margin-left: 3px;
+}
+
+.action-btns .btn {
+    border: none;
+    border-radius: 6px; 
+    padding: 7px 10px; 
+    font-size: 0.85em;
+    font-weight: 600; 
+    text-transform: capitalize;
+    transition: all 0.2s ease-in-out; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: inline-flex; 
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.2px;
+    margin-top: 24px;
+}
+
+.action-btns .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); 
+    opacity: 1;
+}
+
+.action-btns .btn:active {
+    transform: translateY(0); 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.action-btns .btn i {
+    margin-right: 5px; 
+    font-size: 1.0em; 
+}
+
+/* View Button */
+.action-btns .btn-info {
+    background-color: #3498db; /* Blue */
+    color: white;
+}
+
+/* Mark Read Button (when message is NEW) */
+.action-btns .btn-success {
+    background-color: #2ecc71; /* Emerald Green */
+    color: white;
+}
+
+/* Mark Unread Button (when message is READ) */
+.action-btns .btn-warning {
+    background-color: #f1c40f; /* Yellow */
+    color: #34495e; /* Dark text for contrast on yellow */
+}
+.action-btns .btn-warning i {
+    color: #34495e; /* Ensure icon is dark */
+}
+
+
+/* Responsive adjustments for smaller screens (kept from previous version) */
+@media (max-width: 768px) {
+    .action-btns {
+        flex-direction: column; 
+        align-items: stretch; 
+    }
+    .action-btns .btn {
+        width: 100%; 
+        padding: 10px; 
+        margin: 5px 0; 
+    }
+    .action-btns .btn i {
+        margin-right: 10px;
+    }
+}
+
+/* Close Button Style (for modal confirmation/reason dialogs) */
+.action-btns .btn-close-modal,
+#closeReasonModalBottom {
+    background-color: #6c757d; /* Neutral Grey */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#closeReasonModalBottom:hover {
+    background-color: #5a6268; 
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.confirm-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.confirm-modal-actions .btn-modal-cancel {
+    background-color: #ecf0f1;
+    color: #34495e;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.confirm-modal-actions .btn-modal-cancel:hover {
+    background-color: #d8e0e6;
+}
+
+/* Primary Action Button (Yes/Confirm) - Color specific to the action */
+.confirm-modal-actions .btn-modal-confirm {
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.confirm-modal-actions .btn-modal-confirm.approve {
+    background-color: #27ae60; /* Green for Approve */
+}
+.confirm-modal-actions .btn-modal-confirm.approve:hover {
+    background-color: #2ecc71;
+}
+.confirm-modal-actions .btn-modal-confirm.reject {
+    background-color: #c0392b; /* Red for Reject */
+}
+.confirm-modal-actions .btn-modal-confirm.reject:hover {
+    background-color: #e74c3c;
+}
+
+#closeModalBottom:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Styles for the 'x' close button at the top-right of the modal */
+#closeModal {
+    color: #999; /* Lighter grey for the 'x' */
+    float: right;
+    font-size: 30px; /* Make it a bit larger */
+    font-weight: lighter;
+    cursor: pointer;
+    line-height: 1;
+    margin-left: 10px; /* Space from content */
+    transition: color 0.2s ease;
+}
+
+#closeModal:hover,
+#closeModal:focus {
+    color: #333; /* Darken on hover/focus */
+    text-decoration: none;
+}
+
+
+/* Modal Content - Enhanced appearance */
+#messageDetailModal > div { /* This targets the actual modal content box */
+    background-color:#fff; 
+    margin:10% auto; 
+    padding:25px; 
+    border:none; 
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25); /* Deeper shadow for prominence */
+    width:90%; 
+    max-width:650px; /* Slightly wider modal */
+    animation: fadeIn 0.3s ease-out; /* Smooth fade-in effect */
+}
+
+/* Animation for modal fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Modal text and headers */
+#messageDetailModal h4#modalTitle {
+    color: #34495e; /* Darker title for better readability */
+    margin-bottom: 10px; 
+    font-weight: 700;
+    display: flex; /* For icon alignment */
+    align-items: center;
+}
+#messageDetailModal h4#modalTitle i {
+    margin-right: 8px; /* Space between icon and text */
+    color: #007bff; /* Primary color for the icon */
+}
+
+#messageDetailModal p strong {
+    color: #555; /* Slightly darker labels */
+}
+
+#modalSubject {
+    background-color: #e9ecef; /* Lighter background for subject */
+    border-left: 4px solid #007bff; /* Thicker, more prominent border */
+    font-weight: 600;
+    color: #333;
+}
+
+#modalDetails {
+    background-color: #f8f9fa; /* Very light grey for details background */
+    border: 1px solid #dee2e6;
+    color: #444;
+}
+
+#messageDetailModal .modal-footer-clear {
+    clear: both;
+}
