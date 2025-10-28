@@ -1,7 +1,7 @@
 # 📚 Library Management System (LMS)
 
 A modern web-based **Library Management System** designed to simplify and automate core library operations like book issuance, cataloging, and request tracking.  
-Built with **PHP**, **MySQL (PDO)**, **TailwindCSS**, **HTML**, **CSS**, and **JavaScript** — following an organized structure for scalability and maintainability.
+Built with **PHP**, **MySQL**, **TailwindCSS**, **HTML**, **CSS**, and **JavaScript** — following an organized structure for scalability and maintainability.
 
 ---
 
