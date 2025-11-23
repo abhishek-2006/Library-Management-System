@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php'); 
+include('library/includes/config.php'); 
 
 // Color definitions are kept for the footer and visual consistency
 ?>
@@ -14,6 +14,7 @@ include('includes/config.php');
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        
         tailwind.config = {
             theme: {
                 extend: {
@@ -52,7 +53,7 @@ include('includes/config.php');
 
         </div>
     </div>
-    <?php include('includes/footer.php');?>
+    <?php include('library/includes/footer.php');?>
     
 </body>
 </html>
