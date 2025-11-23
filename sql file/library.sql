@@ -21,8 +21,8 @@ SET time_zone = "+00:00";
 -- Database: `library`
 --
 
-CREATE Database library;
-USE library;
+CREATE Database `library`;
+USE `library`;
 
 -- --------------------------------------------------------
 
