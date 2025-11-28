@@ -24,7 +24,7 @@ if(strlen($_SESSION['alogin'])==0) {
 
     // --- 3. COUNT RETURNED BOOKS ---
     $status = 1; // 1 for Returned
-    $sql_returned ="SELECT id from tblissuedbookdetails where RetrunStatus=:status";
+    $sql_returned ="SELECT id from tblissuedbookdetails where ReturnStatus=:status";
     $query_returned = $dbh -> prepare($sql_returned);
     $query_returned->bindParam(':status', $status, PDO::PARAM_STR);
     $query_returned->execute();

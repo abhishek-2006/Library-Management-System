@@ -18,7 +18,7 @@ if(strlen($_SESSION['login'])==0) {
         ISBNNumber, 
         BookPrice, 
         tblbooks.bookImage,
-        (tblbooks.bookCopies - COALESCE(SUM(CASE WHEN tblissuedbookdetails.RetrunStatus IS NULL OR tblissuedbookdetails.RetrunStatus = 0 THEN 1 ELSE 0 END), 0)) AS currentStock
+        (tblbooks.bookCopies - COALESCE(SUM(CASE WHEN tblissuedbookdetails.ReturnStatus IS NULL OR tblissuedbookdetails.ReturnStatus = 0 THEN 1 ELSE 0 END), 0)) AS currentStock
         FROM tblbooks
         JOIN tblcategory ON tblcategory.id = tblbooks.CatId
         JOIN tblauthors ON tblauthors.id = tblbooks.AuthorId

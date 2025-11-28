@@ -26,7 +26,7 @@ if(strlen($_SESSION['login'])==0) {
         tblissuedbookdetails.ReturnDate, 
         tblissuedbookdetails.id as rid, 
         tblissuedbookdetails.fine, 
-        tblissuedbookdetails.RetrunStatus, 
+        tblissuedbookdetails.ReturnStatus, 
         tblbooks.id as bid, 
         tblbooks.bookImage 
         FROM tblissuedbookdetails 
@@ -89,7 +89,7 @@ if(strlen($_SESSION['login'])==0) {
                             $dueDate = date('d-m-Y', strtotime($result->IssuesDate . ' + 15 days')); 
                             $today = date('d-m-Y');
 
-                            if ($result->RetrunStatus == 1) { // Book Returned
+                            if ($result->ReturnStatus == 1) { // Book Returned
                                 $statusText = "Returned";
                                 $statusClass = "status-success";
                                 $fineDisplay = ($result->fine > 0) ? number_format($result->fine, 2) : "-";
@@ -113,7 +113,7 @@ if(strlen($_SESSION['login'])==0) {
                                     $fineDisplay = number_format($overdueDays * $finePerDay, 2) . " (Est.)";
                                 }
                                 // Use recorded fine if it exists and book is not returned
-                                if ($result->fine > 0 && $result->RetrunStatus == 0) {
+                                if ($result->fine > 0 && $result->ReturnStatus == 0) {
                                     $fineDisplay = number_format($result->fine, 2);
                                 }
                             }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+error_reporting(E_ALL);
 include('includes/config.php'); 
 
 // 1. Check if the user is logged in
@@ -25,7 +25,7 @@ if(strlen($_SESSION['login'])==0) {
 
     // 2. Books Pending Return
     $rsts = 0; 
-    $sql2 ="SELECT COUNT(id) AS total_pending FROM tblissuedbookdetails WHERE StudentID=:sid AND RetrunStatus=:rsts";
+    $sql2 ="SELECT COUNT(id) AS total_pending FROM tblissuedbookdetails WHERE StudentID=:sid AND ReturnStatus=:rsts";
     $query2 = $dbh->prepare($sql2);
     $query2->bindParam(':sid', $sid, PDO::PARAM_STR);
     $query2->bindParam(':rsts', $rsts, PDO::PARAM_INT);
@@ -35,7 +35,7 @@ if(strlen($_SESSION['login'])==0) {
 
     // 3. Total Penalty / Fines
     $rstsReturned = 1; 
-    $sql3 ="SELECT SUM(fine) AS total_fine FROM tblissuedbookdetails WHERE StudentID=:sid AND RetrunStatus=:rstsReturned";
+    $sql3 ="SELECT SUM(fine) AS total_fine FROM tblissuedbookdetails WHERE StudentID=:sid AND ReturnStatus=:rstsReturned";
     $query3 = $dbh->prepare($sql3);
     $query3->bindParam(':sid', $sid, PDO::PARAM_STR);
     $query3->bindParam(':rstsReturned', $rstsReturned, PDO::PARAM_INT);

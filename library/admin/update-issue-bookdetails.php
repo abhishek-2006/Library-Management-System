@@ -17,7 +17,7 @@ if(strlen($_SESSION['alogin'])==0) {
         // Using Y-m-d H:i:s format for database
         $returnDate = date('Y-m-d H:i:s'); 
 
-        $sql="UPDATE tblissuedbookdetails SET fine=:fine, RetrunStatus=:rstatus, ReturnDate=:returnDate WHERE id=:rid";
+        $sql="UPDATE tblissuedbookdetails SET fine=:fine, ReturnStatus=:rstatus, ReturnDate=:returnDate WHERE id=:rid";
         $query = $dbh->prepare($sql);
         
         $query->bindParam(':rid',$rid,PDO::PARAM_STR);
@@ -212,7 +212,7 @@ if(strlen($_SESSION['alogin'])==0) {
 <?php 
 // 4. Database Query Execution
 $rid=intval($_GET['rid']);
-$sql = "SELECT tblstudents.FullName,tblbooks.BookName,tblbooks.ISBNNumber,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid,tblissuedbookdetails.fine,tblissuedbookdetails.RetrunStatus from tblissuedbookdetails join tblstudents on tblstudents.StudentId=tblissuedbookdetails.StudentId join tblbooks on tblbooks.id=tblissuedbookdetails.BookId where tblissuedbookdetails.id=:rid";
+$sql = "SELECT tblstudents.FullName,tblbooks.BookName,tblbooks.ISBNNumber,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid,tblissuedbookdetails.fine,tblissuedbookdetails.ReturnStatus from tblissuedbookdetails join tblstudents on tblstudents.StudentId=tblissuedbookdetails.StudentId join tblbooks on tblbooks.id=tblissuedbookdetails.BookId where tblissuedbookdetails.id=:rid";
 $query = $dbh -> prepare($sql);
 $query->bindParam(':rid',$rid,PDO::PARAM_STR);
 $query->execute();
@@ -273,7 +273,7 @@ if($query->rowCount() > 0) { ?>
                         } ?>
                 </div>
 
-                <?php if($result->RetrunStatus==0){?>
+                <?php if($result->ReturnStatus==0){?>
                     <button type="submit" name="return" id="submit" class="custom-btn btn-primary-theme">Return Book </button>
                 <?php } else { ?>
                     <div class="success-message">Book already returned on: <?php echo htmlentities($result->ReturnDate ?? ''); ?></div>
