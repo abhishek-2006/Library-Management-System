@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 27, 2025 at 01:59 PM
+-- Host: 127.0.0.1:3306
+-- Generation Time: Nov 28, 2025 at 07:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,9 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `library`
 --
-
-CREATE Database `library`;
-USE `library`;
 
 -- --------------------------------------------------------
 
@@ -182,18 +179,19 @@ CREATE TABLE `tblissuedbookdetails` (
   `StudentID` int(150) DEFAULT NULL,
   `IssuesDate` timestamp NULL DEFAULT current_timestamp(),
   `ReturnDate` timestamp NULL DEFAULT NULL,
-  `RetrunStatus` int(1) DEFAULT NULL,
-  `fine` decimal(10,2) DEFAULT NULL
+  `ReturnStatus` tinyint(1) NOT NULL DEFAULT 0,
+  `fine` decimal(10,2) DEFAULT NULL,
+  `ExpectedReturnDate` date GENERATED ALWAYS AS (`IssuesDate` + interval 14 day) STORED
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tblissuedbookdetails`
 --
 
-INSERT INTO `tblissuedbookdetails` (`id`, `BookID`, `StudentID`, `IssuesDate`, `ReturnDate`, `RetrunStatus`, `fine`) VALUES
+INSERT INTO `tblissuedbookdetails` (`id`, `BookID`, `StudentID`, `IssuesDate`, `ReturnDate`, `ReturnStatus`, `fine`) VALUES
 (3, 1, 101, '2025-10-24 10:03:32', '2025-10-24 09:27:43', 1, 0.00),
 (4, 2, 103, '2025-10-24 12:54:55', '2025-10-25 04:55:23', 1, 0.00),
-(7, 2, 101, '2025-10-25 13:33:26', NULL, NULL, NULL);
+(7, 2, 101, '2025-10-25 13:33:26', '2025-11-28 16:45:23', 1, 200.00);
 
 -- --------------------------------------------------------
 
@@ -292,7 +290,7 @@ CREATE TABLE `tblstudents` (
 --
 
 INSERT INTO `tblstudents` (`id`, `StudentId`, `FullName`, `EmailId`, `MobileNumber`, `Password`, `Status`, `RegDate`, `UpdationDate`) VALUES
-(1, 101, 'Test', 'test@gmail.com', '9876453210', '123', 1, '2025-10-22 07:01:22', '2025-10-24 14:02:04'),
+(1, 101, 'Test', 'test@gmail.com', '9876453201', '123', 1, '2025-10-22 07:01:22', '2025-11-28 17:27:15'),
 (6, 103, 'mad', 'mad@mad.com', '1234589760', '123', 1, '2025-10-22 10:33:02', '2025-10-24 06:07:42');
 
 --
