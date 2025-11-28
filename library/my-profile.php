@@ -3,91 +3,79 @@ session_start();
 error_reporting(E_ALL);
 include('includes/config.php');
 
-if(strlen($_SESSION['login'])==0) { 
-    header('location:index.php');
-    exit(); 
-} else {
-    $currentPage = 'my-profile.php';
-    $msg = $error = "";
+if (!isset($_SESSION['login']) || strlen($_SESSION['login']) == 0) {
+    header('Location: ../index.php');
+    exit();
+}
 
-    $sid = $_SESSION['stdid'];
-    
-    // Process form submission for profile update
-    if(isset($_POST['update'])) {
-        $fname = $_POST['fullname'];
-        $mobileno = $_POST['mobileno'];
-        $emailid = $_POST['emailid']; 
+$currentPage = 'my-profile.php';
+$msg = '';
+$error = '';
 
-        // 1. Check if the new email is already registered to another user
-        $checkSql = "SELECT StudentId FROM tblstudents WHERE EmailId=:emailid AND StudentId != :sid";
-        $checkQuery = $dbh->prepare($checkSql);
-        $checkQuery->bindParam(':emailid', $emailid, PDO::PARAM_STR);
-        $checkQuery->bindParam(':sid', $sid, PDO::PARAM_STR);
-        $checkQuery->execute();
+$sid = $_SESSION['stdid'] ?? null;
+if (!$sid) {
+    header('Location: logout.php');
+    exit();
+}
 
-        if($checkQuery->rowCount() > 0) {
-            $error = "Update failed: This email address is already registered to another user.";
-        } else {
-            // 2. Execute the Update Query
-            $sql = "UPDATE tblstudents SET FullName=:fname, MobileNumber=:mobileno, EmailId=:emailid WHERE StudentId=:sid";
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':fname', $fname, PDO::PARAM_STR);
-            $query->bindParam(':mobileno', $mobileno, PDO::PARAM_STR);
-            $query->bindParam(':emailid', $emailid, PDO::PARAM_STR);
-            $query->bindParam(':sid', $sid, PDO::PARAM_STR);
-            
-            if ($query->execute()) {
-                $_SESSION['login'] = $fname; // Update the session display name
-                $msg = "Profile updated successfully!";
-            } else {
-                $error = "Update failed. Please try again.";
-            }
-        }
-    }
-    
-    // Fetch current student details
-    $sql = "SELECT StudentId, FullName, EmailId, MobileNumber, RegDate, Status FROM tblstudents WHERE StudentId=:sid";
+if (isset($_GET['updated']) && $_GET['updated'] == '1') {
+    $msg = "Profile updated successfully!";
+}
+if (isset($_GET['error'])) {
+    $error = htmlspecialchars($_GET['error']);
+}
+
+try {
+    $sql = "SELECT StudentId, FullName, EmailId, MobileNumber, RegDate, Status
+            FROM tblstudents
+            WHERE StudentId = :sid
+            LIMIT 1";
     $query = $dbh->prepare($sql);
     $query->bindParam(':sid', $sid, PDO::PARAM_STR);
     $query->execute();
     $result = $query->fetch(PDO::FETCH_OBJ);
 
-    // If no user found (safe check)
-    if(!$result) {
+    if (!$result) {
         $error = "Error: User profile data could not be retrieved.";
     }
+} catch (PDOException $e) {
+    error_log("DB error fetching profile for sid={$sid}: " . $e->getMessage());
+    $error = "A server error occurred while loading your profile.";
+}
 
-    // --- FINE VIEW LOGIC ---
-    $fineResults = [];
-    $fineRate = '₹10.00';
+/* Fine rate - numeric for calculations and formatted for display */
+$fineRatePerDay = 10;                 // numeric rupees/day
+$fineRate = '₹' . number_format($fineRatePerDay, 2); // formatted display
 
-    // ... around line 80 ...
-    if (isset($_GET['view']) && $_GET['view'] == 'fine') {
-        
+$fineResults = [];
+if (isset($_GET['view']) && $_GET['view'] === 'fine') {
+    try {
         $sqlFine = "
             SELECT
-                tblbooks.BookName,
-                tblissuedbookdetails.IssuesDate,
-                tblissuedbookdetails.ReturnDate,
-                tblissuedbookdetails.fine        
-            FROM
-                tblissuedbookdetails
-            JOIN
-                tblbooks ON tblbooks.id = tblissuedbookdetails.BookId
-            WHERE
-                tblissuedbookdetails.StudentID = :sid
-                AND tblissuedbookdetails.RetrunStatus = 1  
-                AND tblissuedbookdetails.fine > 0          
-            ORDER BY
-                tblissuedbookdetails.ReturnDate DESC
-        ";
-
+                ibd.BookId,
+                b.BookName,
+                ibd.IssuesDate,
+                ibd.ExpectedReturnDate,
+                ibd.ReturnDate,
+                GREATEST(DATEDIFF(ibd.ReturnDate, ibd.ExpectedReturnDate), 0) AS DaysLate,
+                ibd.fine
+            FROM tblissuedbookdetails ibd
+            JOIN tblbooks b ON b.id = ibd.BookId
+            WHERE ibd.StudentID = :sid
+                AND ibd.ReturnStatus = 1
+                AND (ibd.fine IS NOT NULL AND ibd.fine > 0)
+            ORDER BY ibd.ReturnDate DESC";
         $queryFine = $dbh->prepare($sqlFine);
         $queryFine->bindParam(':sid', $sid, PDO::PARAM_STR);
-        $queryFine->execute(); 
+        $queryFine->execute();
         $fineResults = $queryFine->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("DB error fetching fines for sid={$sid}: " . $e->getMessage());
+        $error = "Could not load fine history at the moment.";
     }
+}
 ?>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -255,48 +243,10 @@ if(strlen($_SESSION['login'])==0) {
                             </span>
                         </div>
 
-                        <label for="edit-toggle" class="btn-submit-primary mt-6 cursor-pointer">
+                        <a href="edit-profile.php" class="btn-submit-primary mt-6">
                             <i class="fas fa-edit"></i> Edit Profile
-                        </label>
+                        </a>
                     </div>
-                    
-                    <input type="checkbox" id="edit-toggle" hidden>
-                    <div class="profile-edit-form-wrapper">
-                        <hr class="my-6 border-gray-200">
-                        <h5 class="text-lg font-bold text-gray-700 mb-4">Update Your Information</h5>
-                        
-                        <form method="post" name="signup" action="my-profile.php" onsubmit="return checkMobile();" class="contact-form">
-                            
-                            <div class="form-group">
-                                <label for="studentid">Student ID (Roll Number):</label>
-                                <input type="text" id="studentid" value="<?php echo htmlentities($result->StudentId);?>" readonly class="form-input form-input-readonly">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="fullname">Full Name <span class="required-star">*</span>:</label>
-                                <input type="text" id="fullname" name="fullname" value="<?php echo htmlentities($result->FullName);?>" required placeholder="Enter your full name" class="form-input">
-                            </div>
-                            <div class="form-group">
-                                <label for="emailid">Email ID <span class="required-star">*</span>:</label>
-                                <input type="email" id="emailid" name="emailid" value="<?php echo htmlentities($result->EmailId);?>" required placeholder="Enter your new email address" class="form-input">
-                            </div>
-                            <div class="form-group">
-                                <label for="mobileno">Mobile Number <span class="required-star">*</span>:</label>
-                                <input type="text" id="mobileno" name="mobileno" value="<?php echo htmlentities($result->MobileNumber);?>" required maxlength="10" pattern="\d{10}" title="Mobile number must be 10 digits" class="form-input" placeholder="Enter your 10-digit mobile number">
-                            </div>
-
-                            <div class="flex justify-between items-center mt-4">
-                                <button type="submit" name="update" class="btn-submit-primary">
-                                    <i class="fas fa-save"></i> Save Changes
-                                </button>
-                                <label for="edit-toggle" class="text-danger-red hover:text-red-700 cursor-pointer font-medium">
-                                    Cancel Edit
-                                </label>
-                            </div>
-                            
-                        </form>
-                    </div>
-                    
                     <?php endif; ?>
                 </div>
 
@@ -322,39 +272,40 @@ if(strlen($_SESSION['login'])==0) {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $count = 1;
-                                $totalFine = 0;
-                                if (!empty($fineResults)): 
-                                    foreach ($fineResults as $row):
-                                        $fine = $row['DaysLate'] * $fineRate;
-                                        $totalFine += $fine;
-                                ?>
+                                <?php
+                                    $count = 1;
+                                    $totalFine = 0;
+                                    if (!empty($fineResults)):
+                                        foreach ($fineResults as $row):
+                                            $daysLate = (int)($row['DaysLate'] ?? 0);
+                                            $fine = $daysLate * $fineRatePerDay;
+                                            $totalFine += $fine;
+                                    ?>
                                     <tr>
                                         <td><?php echo $count++; ?></td>
                                         <td><?php echo htmlentities($row['BookName']); ?></td>
                                         <td><?php echo htmlentities(date('d-M-Y', strtotime($row['IssuesDate']))); ?></td>
                                         <td><?php echo htmlentities(date('d-M-Y', strtotime($row['ExpectedReturnDate']))); ?></td>
                                         <td><?php echo htmlentities(date('d-M-Y', strtotime($row['ReturnDate']))); ?></td>
-                                        <td class="text-late"><?php echo htmlentities($row['DaysLate']); ?></td>
-                                        <td class="text-fine"><?php echo number_format($fine, 2); ?></td>
+                                        <td class="text-late"><?php echo $daysLate; ?></td>
+                                        <td class="text-fine">₹<?php echo number_format($fine, 2); ?></td>
                                     </tr>
-                                <?php 
-                                    endforeach; 
-                                else:
-                                ?>
-                                    <tr>
-                                        <td colspan="7" style="text-align: center; padding: 30px; color: #555;">
-                                            <i class="fas fa-hand-holding-usd fa-2x mb-2" style="color: #007bff;"></i>
-                                            <p>No late return fines recorded for your account.</p>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
-                                
-                                <?php if (!empty($fineResults)): ?>
-                                <tr class="total-fine-row">
-                                    <td colspan="6" style="text-align: right;">Total Fine Due (Accumulated):</td>
-                                    <td class="text-fine"><?php echo number_format($totalFine, 2); ?></td>
+                                    <?php
+                                        endforeach;
+                                    else:
+                                    ?>
+                                    <tr> ... no fines ... </tr>
+                                    <?php endif; ?>
+                                    <?php if (!empty($fineResults)): ?>
+                                        <tr class="total-fine-row">
+                                            <td colspan="6" style="text-align: right;">Total Fine Due (Accumulated):</td>
+                                            <td class="text-fine">₹<?php echo number_format($totalFine, 2); ?></td>
+                                        </tr>
+                                        <?php endif; ?>
+                                    <?php if (!empty($fineResults)): ?>
+                                    <tr class="total-fine-row">
+                                        <td colspan="6" style="text-align: right;">Total Fine Due (Accumulated):</td>
+                                        <td class="text-fine"><?php echo number_format($totalFine, 2); ?></td>
                                 </tr>
                                 <?php endif; ?>
                             </tbody>
@@ -370,4 +321,3 @@ if(strlen($_SESSION['login'])==0) {
     <?php include('includes/footer.php');?>
 </body>
 </html>
-<?php } ?>
