@@ -150,13 +150,10 @@ if(isset($_POST['login'])) {
                             Not Register Yet?
                         </a>
                     </div>
-
                 </form>
             </div>
-            
         </div>
     </div>
-    
     <?php include('includes/footer.php');?>
 </body>
 </html>
