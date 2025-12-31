@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php'); 
+require('includes/config.php'); 
 
 // Ensure any existing sessions (student or admin) are explicitly cleared before attempting a new login.
 if(isset($_SESSION['login']) || isset($_SESSION['alogin'])){

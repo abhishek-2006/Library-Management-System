@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php');
+require('includes/config.php');
 
 // Ensure only logged-in students can view this page
 if(strlen($_SESSION['login'])==0) { 

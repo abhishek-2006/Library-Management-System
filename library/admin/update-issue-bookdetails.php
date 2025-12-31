@@ -2,7 +2,7 @@
 session_start();
 // Set error reporting to E_ALL
 error_reporting(E_ALL); 
-include('includes/config.php');
+require('includes/config.php');
 
 // 1. Security Check
 if(strlen($_SESSION['alogin'])==0) { 	

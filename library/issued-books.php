@@ -1,5 +1,4 @@
 <?php
-// --- CRITICAL DEBUG SETTINGS ---
 // Set error reporting to catch fatal errors that cause blank pages
 error_reporting(0);
 ini_set('display_errors', 1);
@@ -7,7 +6,7 @@ ini_set('display_errors', 1);
 session_start();
 
 // --- Configuration and Database Connection ---
-include('includes/config.php');
+require('includes/config.php');
 
 // --- Authentication Check ---
 if(strlen($_SESSION['login'])==0) { 

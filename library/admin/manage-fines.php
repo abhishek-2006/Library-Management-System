@@ -2,7 +2,7 @@
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include('includes/config.php');
+require('includes/config.php');
 
 // ======= SESSION CHECK =======
 if (!isset($_SESSION['adminlogin']) || strlen($_SESSION['adminlogin']) == 0) {

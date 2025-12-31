@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
-include('includes/config.php'); 
+require('includes/config.php'); 
 
 $error_message = "";
 $success_message = "";

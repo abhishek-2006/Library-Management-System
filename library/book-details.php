@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(E_ALL);
-include('includes/config.php');
+require('includes/config.php');
 
 // Initialize variables
 $bookid = 0;

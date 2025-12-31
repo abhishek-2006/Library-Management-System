@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(E_ALL);
-include('includes/config.php'); 
+require('includes/config.php'); 
 
 // 1. Check if the user is logged in
 if(strlen($_SESSION['login'])==0) { 
