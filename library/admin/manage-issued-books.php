@@ -14,14 +14,10 @@ if(strlen($_SESSION['alogin'])==0) {
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Online Library Management System | Manage Issued Books</title>
-    <!-- FONT AWESOME STYLE  -->
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- DATATABLE STYLE  -->
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
-    <!-- CUSTOM STYLE  -->
     <link href="assets/css/style.css" rel="stylesheet" />
-    <!-- GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
 </head>

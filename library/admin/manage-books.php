@@ -5,7 +5,7 @@ require('includes/config.php');
 
 // Security check: Redirect if not logged in
 if(strlen($_SESSION['alogin'])==0) { 
-    header('location:index.php');
+    header('location:../../index.php');
 } else { 
     // Handle Delete Action
     if(isset($_GET['del'])) {

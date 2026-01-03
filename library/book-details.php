@@ -78,14 +78,13 @@ if (isset($_POST['request_borrow']) && isset($_SESSION['login'])) {
     <link rel="stylesheet" href="assets/css/style.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Define the custom color if not in tailwind.config.js */
         .bg-primary-indigo { background-color: #4338CA; }
         .text-primary-indigo { color: #4338CA; }
         .border-primary-indigo { border-color: #4338CA; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col antialiased">
-    <?php include('includes/header.php'); // Include a header for navigation ?>
+    <?php include('includes/header.php'); ?>
 
     <div class="flex-grow py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">

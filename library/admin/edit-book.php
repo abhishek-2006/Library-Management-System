@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 require('includes/config.php');
 
 if(strlen($_SESSION['alogin'])==0) { 
-    header('location:index.php');
+    header('location:../../index.php');
 } else { 
     $bookid = intval($_GET['bookid']);
 
@@ -21,9 +21,6 @@ if(strlen($_SESSION['alogin'])==0) {
         $edition=$_POST['bookedition']; // NEW
         $description=$_POST['bookdescription']; // NEW
         
-        // Handle Image Update (If needed, this only handles text fields)
-        // For a complete solution, image upload/replace logic should be here.
-
         $sql="UPDATE tblbooks SET BookName=:bookname, CatId=:category, AuthorId=:author, PublisherId=:publisher, ISBNNumber=:isbn, BookPrice=:price, bookCopies=:copies, bookEdition=:edition, BookDescription=:description WHERE id=:bookid";
         
         $query = $dbh->prepare($sql);
@@ -44,7 +41,6 @@ if(strlen($_SESSION['alogin'])==0) {
     }
 
     // --- Initial Data Fetch Query ---
-    // Expanded query to include Publisher, bookImage, bookCopies, bookEdition, BookDescription
     $sql = "SELECT 
                 b.BookName, b.ISBNNumber, b.BookPrice, b.bookImage, b.bookCopies, b.bookEdition, b.BookDescription, b.id as bookid,
                 c.CategoryName, c.id as cid,
@@ -62,91 +58,295 @@ if(strlen($_SESSION['alogin'])==0) {
     $results=$query->fetchAll(PDO::FETCH_OBJ);
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Online Library Management System | Edit Book</title>
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="assets/css/style.css" rel="stylesheet" />
+    <title>Edit Book</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #f8fafc;
+            font-family: 'Inter', -apple-system, sans-serif;
+            color: #334155;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .header-line {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e3a5f;
+            border-bottom: 3px solid #3b82f6;
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-bottom: 30px;
+        }
+        /* Alert Styles */
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        /* Card Layout */
+        .edit-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .card-header {
+            background: #1e3a5f;
+            color: #fff;
+            padding: 20px 30px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .card-body {
+            padding: 40px;
+        }
+
+        /* Two Column Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 40px;
+        }
+        @media (max-width: 850px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Image Styling */
+        .img-preview-container {
+            text-align: center;
+            background-color: #fcfcfc;
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 25px;
+            height: fit-content;
+        }
+        .image-label {
+            display: block;
+            font-weight: 700;
+            color: #64748b;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        .preview-box {
+            width: 100%;
+            margin-bottom: 30px; /* Space between image and upload button */
+            display: block;
+        }
+        .img-preview {
+            width: 100%;
+            max-width: 260px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+        .no-image {
+            width: 100%;
+            height: 300px;
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            border-radius: 8px;
+        }
+
+        /* Input Controls */
+        .cust-form-group {
+            margin-bottom: 25px;
+            width: 100%;
+        }
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        .required { color: #ef4444; }
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .help-block { font-size: 12px; color: #94a3b8; margin-top: 5px; }
+
+        /* Row of inputs */
+        .input-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .input-row .form-group { flex: 1; min-width: 200px; }
+
+        /* Custom File Upload Styling */
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            margin-top: 10px;
+        }
+        .file-upload-btn {
+            background-color: #e2e8f0;
+            border: 1px solid #cbd5e1;
+            color: #475569;
+            padding: 12px;
+            border-radius: 6px;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            display: block;
+            transition: all 0.2s;
+        }
+        .file-upload-btn:hover {
+            background-color: #cbd5e1;
+            color: #1e3a5f;
+        }
+        .file-upload-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        #file-chosen-text {
+            display: block;
+            margin-top: 8px;
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+        }
+
+        /* Buttons */
+        .btn-actions {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            gap: 15px;
+        }
+        .custom-btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.1s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .custom-btn:active { transform: scale(0.98); }
+        .btn-primary-theme {
+            background-color: #3b82f6;
+            color: #fff;
+        }
+        .btn-primary-theme:hover { background-color: #2563eb; }
+        .btn-secondary-theme {
+            background-color: #64748b;
+            color: #fff;
+        }
+        .btn-secondary-theme:hover { background-color: #475569; }
+    </style>
 </head>
 <body>
     <?php include('includes/header.php');?>
     
     <div class="content-wrapper">
         <div class="container">
-            <div class="page-header-wrapper">
-                <h4 class="header-line">Edit Book Details</h4>
-            </div>
+            <h4 class="header-line">Edit Book Details</h4>
 
+            <!-- Notifications -->
             <?php if(isset($_SESSION['error']) && $_SESSION['error']!="") { ?>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger">
-                            <strong>Error:</strong> <?php echo htmlentities($_SESSION['error']); unset($_SESSION['error']); ?>
-                        </div>
-                    </div>
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> <?php echo htmlentities($_SESSION['error']); unset($_SESSION['error']); ?>
                 </div>
             <?php } ?>
             <?php if(isset($_SESSION['msg']) && $_SESSION['msg']!="") { ?>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="alert alert-success">
-                            <strong>Success:</strong> <?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?>
-                        </div>
-                    </div>
+                <div class="alert alert-success">
+                    <strong>Success:</strong> <?php echo htmlentities($_SESSION['msg']); unset($_SESSION['msg']); ?>
                 </div>
             <?php } ?>
 
-            <div class="form-container-wrapper">
-                    <div class="panel-default">
-                        <div class="panel-heading">
-                            Update Book Information
-                        </div>
-                        <div class="panel-body">
-                            <form role="form" method="post" enctype="multipart/form-data">
-                            <?php 
-                            if($query->rowCount() > 0) {
-                                foreach($results as $result) { ?>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group text-center">
-                                            <h4>Current Cover Image</h4>
-                                            <?php if (!empty($result->bookImage)): // Check if BLOB data is present ?>
-                                                <img src="assets/img/<?php echo htmlentities($result->bookImage);?>" 
-                                                    alt="<?php echo htmlentities($result->BookName);?>" 
-                                                    class="img-thumbnail-lg" 
-                                                    style="max-width: 150px; height: auto; display: block; margin: 10px auto 20px;">
-                                            <?php else: ?>
-                                                <div class="img-thumbnail-lg" style="max-width: 150px; height: 200px; line-height: 200px; border: 1px dashed #ccc; margin: 10px auto 20px;">
-                                                    No Image
-                                                </div>
-                                            <?php endif; ?>
-                                            
-                                            <div class="form-group">
-                                                <label for="bookimage_upload">Change Book Cover Image</label>
-                                                <div class="custom-file-upload-wrapper">
-                                                    <input type="file" name="bookimage" id="bookimage_upload" class="custom-file-input"/>
-                                                    <label for="bookimage_upload" class="custom-file-upload-label">
-                                                        <i class="fa fa-upload"></i> Select File
-                                                    </label>
-                                                    <span id="file-chosen-text">No file chosen</span>
-                                                </div>
+            <div class="edit-card">
+                <div class="card-header">
+                    <i class="fas fa-book-open"></i> Update Book Information
+                </div>
+                <div class="card-body">
+                    <form role="form" method="post" enctype="multipart/form-data">
+                        <?php 
+                        if($query->rowCount() > 0) {
+                            foreach($results as $result) { ?>
+                            
+                            <div class="form-grid">
+                                <div class="img-preview-container">
+                                    <span class="image-label">Current Cover Image</span>
+                                    
+                                    <div class="preview-box">
+                                        <?php if (!empty($result->bookImage)): ?>
+                                            <img src="assets/img/<?php echo htmlentities($result->bookImage);?>" 
+                                                 alt="<?php echo htmlentities($result->BookName);?>" 
+                                                 class="img-preview">
+                                        <?php else: ?>
+                                            <div class="no-image">
+                                                <span><i class="fas fa-image fa-3x"></i><br>No Image</span>
                                             </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    
+                                    <div class="cust-form-group" style="margin-bottom: 0;">
+                                        <label style="text-align: left;">Change Cover Image</label>
+                                        <div class="file-upload-wrapper">
+                                            <span class="file-upload-btn"><i class="fa fa-upload"></i> Select File</span>
+                                            <input type="file" name="bookimage" id="bookimage_upload" />
                                         </div>
-                                    <hr/>
+                                        <span id="file-chosen-text">No file chosen</span>
+                                    </div>
                                 </div>
-                                <div class="col-md-8">
+
+                                <!-- Main Form Fields -->
+                                <div>
                                     <div class="form-group">
-                                        <label for="bookname">Book Name <span style="color:red;">*</span></label>
+                                        <label for="bookname">Book Name <span class="required">*</span></label>
                                         <input class="form-control" type="text" name="bookname" id="bookname" value="<?php echo htmlentities($result->BookName);?>" required />
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="category">Category <span style="color:red;">*</span></label>
-                                        <select class="form-control" name="category" id="category" required="required">
-                                            <option value="<?php echo htmlentities($result->cid);?>"> <?php echo htmlentities($catname=$result->CategoryName);?></option>
+                                    <div class="input-row">
+                                        <div class="form-group">
+                                            <label for="category">Category <span class="required">*</span></label>
+                                            <select class="form-control" name="category" id="category" required>
+                                                <option value="<?php echo htmlentities($result->cid);?>"><?php echo htmlentities($catname=$result->CategoryName);?></option>
                                                 <?php 
                                                 $status=1;
                                                 $sql1 = "SELECT id, CategoryName from tblcategory where Status=:status";
@@ -165,9 +365,9 @@ if(strlen($_SESSION['alogin'])==0) {
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="author">Author <span style="color:red;">*</span></label>
-                                            <select class="form-control" name="author" id="author" required="required">
-                                                <option value="<?php echo htmlentities($result->athrid);?>"> <?php echo htmlentities($athrname=$result->AuthorName);?></option>
+                                            <label for="author">Author <span class="required">*</span></label>
+                                            <select class="form-control" name="author" id="author" required>
+                                                <option value="<?php echo htmlentities($result->athrid);?>"><?php echo htmlentities($athrname=$result->AuthorName);?></option>
                                                 <?php 
                                                 $sql2 = "SELECT id, AuthorName from tblauthors ";
                                                 $query2 = $dbh -> prepare($sql2);
@@ -182,85 +382,81 @@ if(strlen($_SESSION['alogin'])==0) {
                                                 } ?> 
                                             </select>
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label for="publisher">Publisher <span style="color:red;">*</span></label>
-                                            <select class="form-control" name="publisher" id="publisher" required="required">
-                                                <option value="<?php echo htmlentities($result->pubid);?>"> <?php echo htmlentities($pubname=$result->PublisherName);?></option>
-                                                <?php 
-                                                $sql3 = "SELECT id, PublisherName from tblpublishers ";
-                                                $query3 = $dbh -> prepare($sql3);
-                                                $query3->execute();
-                                                $result3=$query3->fetchAll(PDO::FETCH_OBJ);
-                                                if($query3->rowCount() > 0) {
-                                                    foreach($result3 as $pub) {
-                                                        if($pubname != $pub->PublisherName) {
-                                                            echo '<option value="'.htmlentities($pub->id).'">'.htmlentities($pub->PublisherName).'</option>';
-                                                        }
+                                    <div class="form-group">
+                                        <label for="publisher">Publisher <span class="required">*</span></label>
+                                        <select class="form-control" name="publisher" id="publisher" required>
+                                            <option value="<?php echo htmlentities($result->pubid);?>"><?php echo htmlentities($pubname=$result->PublisherName);?></option>
+                                            <?php 
+                                            $sql3 = "SELECT id, PublisherName from tblpublishers ";
+                                            $query3 = $dbh -> prepare($sql3);
+                                            $query3->execute();
+                                            $result3=$query3->fetchAll(PDO::FETCH_OBJ);
+                                            if($query3->rowCount() > 0) {
+                                                foreach($result3 as $pub) {
+                                                    if($pubname != $pub->PublisherName) {
+                                                        echo '<option value="'.htmlentities($pub->id).'">'.htmlentities($pub->PublisherName).'</option>';
                                                     }
-                                                } ?> 
-                                            </select>
-                                        </div>
+                                                }
+                                            } ?> 
+                                        </select>
                                     </div>
-                                </div>
-                                
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="isbn">ISBN Number <span style="color:red;">*</span></label>
-                                            <input class="form-control" type="text" name="isbn" id="isbn" value="<?php echo htmlentities($result->ISBNNumber);?>" required="required" />
-                                            <p class="help-block">ISBN Must be unique.</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="price">Price <span style="color:red;">*</span></label>
-                                            <input class="form-control" type="text" name="price" id="price" value="<?php echo htmlentities($result->BookPrice);?>" required="required" />
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="input-row">
                                         <div class="form-group">
-                                            <label for="bookcopies">Number of Copies <span style="color:red;">*</span></label>
-                                            <input class="form-control" type="number" name="bookcopies" id="bookcopies" value="<?php echo htmlentities($result->bookCopies);?>" required="required" min="0" />
+                                            <label for="isbn">ISBN Number <span class="required">*</span></label>
+                                            <input class="form-control" type="text" name="isbn" id="isbn" value="<?php echo htmlentities($result->ISBNNumber);?>" required />
+                                            <p class="help-block">ISBN must be unique.</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="price">Price (₹) <span class="required">*</span></label>
+                                            <input class="form-control" type="text" name="price" id="price" value="<?php echo htmlentities($result->BookPrice);?>" required />
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+
+                                    <div class="input-row">
                                         <div class="form-group">
-                                            <label for="bookedition">Book Edition</label>
+                                            <label for="bookcopies">Copies <span class="required">*</span></label>
+                                            <input class="form-control" type="number" name="bookcopies" id="bookcopies" value="<?php echo htmlentities($result->bookCopies);?>" required min="0" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="bookedition">Edition</label>
                                             <input class="form-control" type="text" name="bookedition" id="bookedition" value="<?php echo htmlentities($result->bookEdition);?>" />
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <label for="bookdescription">Book Description</label>
-                                    <textarea class="form-control" name="bookdescription" id="bookdescription" rows="5"><?php echo htmlentities($result->BookDescription);?></textarea>
+                                    <div class="form-group">
+                                        <label for="bookdescription">Book Description</label>
+                                        <textarea class="form-control" name="bookdescription" id="bookdescription" rows="5"><?php echo htmlentities($result->BookDescription);?></textarea>
+                                    </div>
                                 </div>
-                            
-                            <?php 
-                                } 
+                            </div>
+
+                        <?php 
                             } 
-                            ?>
-                                <button type="submit" name="update" class="custom-btn btn-primary-theme"><i class="fa fa-save"></i> Update Book </button>
-                                <a href="manage-books.php" class="custom-btn btn-secondary-theme"><i class="fa fa-arrow-left"></i> Back to List</a>
-                            </form>
+                        } 
+                        ?>
+                        
+                        <div class="btn-actions">
+                            <button type="submit" name="update" class="custom-btn btn-primary-theme">
+                                <i class="fas fa-save"></i> Update Book </button>
+                            <a href="manage-books.php" class="custom-btn btn-secondary-theme">
+                                <i class="fas fa-arrow-left"></i> Back to List
+                            </a>
                         </div>
-                    </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
     
     <?php include('includes/footer.php');?>
-    <script src="assets/js/jquery-1.10.2.js"></script>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('bookimage_upload');
         const fileText = document.getElementById('file-chosen-text');
-
-        // Check if the elements exist before adding the listener
         if (fileInput && fileText) {
             fileInput.addEventListener('change', function() {
                 if (this.files && this.files.length > 0) {
@@ -271,7 +467,7 @@ if(strlen($_SESSION['alogin'])==0) {
             });
         }
     });
-</script>
+    </script>
 </body>
 </html>
 <?php } ?>

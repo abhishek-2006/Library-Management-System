@@ -10,7 +10,7 @@ require('includes/config.php');
 
 // --- Authentication Check ---
 if(strlen($_SESSION['login'])==0) { 
-    header('location:index.php');
+    header('location:../index.php');
     exit(); 
 } else {
     $sid = $_SESSION['stdid'];

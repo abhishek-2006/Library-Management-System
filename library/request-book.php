@@ -5,7 +5,7 @@ require('includes/config.php');
 
 // Ensure only logged-in students can view this page
 if(strlen($_SESSION['login'])==0) { 
-    header('location:index.php');
+    header('location:../index.php');
     exit(); 
 } else {
     $sid = $_SESSION['stdid'];

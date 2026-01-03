@@ -14,6 +14,6 @@ if (ini_get("session.use_cookies")) {
 unset($_SESSION['login']);
 
 session_destroy();
-header("location:/Library Management System/index.php"); 
+header("location:../index.php"); 
 exit(); 
 ?>

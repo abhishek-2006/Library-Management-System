@@ -338,10 +338,9 @@ body {
     text-align: center;
     justify-content: center;
     margin-bottom: 5px;
-    color: var(--text-dark); /* Ensure number is dark */
+    color: var(--text-dark);
 }
 .feature-label {
-    /* Adjusted for a clear, uppercase label */
     font-size: 0.85rem;
     font-weight: 600;
     color: #6c757d;
@@ -350,7 +349,7 @@ body {
     text-align: center;
     justify-content: center;
     letter-spacing: 0.5px;
-    margin-bottom: 0; /* Clear up unnecessary bottom margin */
+    margin-bottom: 0;
 }
 
 /* Feature Card Colors (Borders and Icons) */
@@ -399,9 +398,7 @@ body {
 }
 
 
-/* =================================================================
-   RESPONSIVENESS (Media Queries)
-   ================================================================= */
+/* RESPONSIVENESS (Media Queries) */
 @media (max-width: 1024px) {
     .dashboard-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
     .quick-access-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -435,9 +432,7 @@ body {
     }
 }
 
-/* =================================================================
-    MANAGE-BOOKS.PHP
-   ================================================================= */
+/* MANAGE-BOOKS.PHP */
 
 /* --- 1. GLOBAL VARIABLES & BASE RESET --- */
 :root {
@@ -473,10 +468,9 @@ body {
     /* If the HTML still uses col-md-offset-x, this ensures it works for centering */
     margin-left: auto;
     margin-right: auto;
-    float: none; /* Override old float behavior */
+    float: none;
 }
-/* Ensure the row containing the main content is centered */
-.row.pad-botm { /* This is the row containing the H4 title */
+.row.pad-botm { 
     margin-bottom: 30px;
 }
 /* Add a style to ensure the specific form row centers the content */
@@ -488,10 +482,10 @@ body {
 /* --- 3. PANEL/CARD STYLES (Table Container) --- */
 /* 2. PANEL/CARD STYLES (Refined for Form) */
 .panel-default {
-    background: #ffffff; /* Explicitly white */
-    border: 1px solid #d3dce6; /* Lighter border */
-    border-radius: 12px; /* Slightly larger border radius for modern feel */
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1); /* Stronger, professional shadow */
+    background: #ffffff;
+    border: 1px solid #d3dce6;
+    border-radius: 12px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
 }
 
@@ -511,7 +505,7 @@ body {
     padding: 30px;
 }
 
-/* 3. FORM & INPUT STYLES (Refined) */
+/* 3. FORM & INPUT STYLES */
 .form-group {
     margin-bottom: 25px;
 }
@@ -963,7 +957,6 @@ textarea.form-control {
 .label-danger { background-color: #d9534f; }
 .label-success { background-color: #5cb85c; }
 
-/* Panel/Card Styling */
 /*
  * Admin Book Requests Styles
  * Used for manage-book-requests.php to visually enhance the request list.

@@ -5,8 +5,8 @@ ini_set('display_errors', 1);
 require('includes/config.php');
 
 // ======= SESSION CHECK =======
-if (!isset($_SESSION['adminlogin']) || strlen($_SESSION['adminlogin']) == 0) {
-    header('Location: index.php');
+if (!isset($_SESSION['alogin']) || strlen($_SESSION['alogin']) == 0) {
+    header('Location: ../../index.php');
     exit();
 }
 

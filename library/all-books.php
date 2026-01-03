@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 require('includes/config.php');
 
 if(strlen($_SESSION['login'])==0) { 
-    header('location:index.php');
+    header('location:../index.php');
     exit(); 
 } else {
     $currentPage = 'all-books.php';
