@@ -18,8 +18,8 @@ if(strlen($_SESSION['alogin'])==0) {
         $isbn=$_POST['isbn'];
         $price=$_POST['price'];
         $copies=$_POST['bookcopies'];
-        $edition=$_POST['bookedition']; // NEW
-        $description=$_POST['bookdescription']; // NEW
+        $edition=$_POST['bookedition'];
+        $description=$_POST['bookdescription'];
         
         $sql="UPDATE tblbooks SET BookName=:bookname, CatId=:category, AuthorId=:author, PublisherId=:publisher, ISBNNumber=:isbn, BookPrice=:price, bookCopies=:copies, bookEdition=:edition, BookDescription=:description WHERE id=:bookid";
         
@@ -27,13 +27,13 @@ if(strlen($_SESSION['alogin'])==0) {
         $query->bindParam(':bookname',$bookname,PDO::PARAM_STR);
         $query->bindParam(':category',$category,PDO::PARAM_STR);
         $query->bindParam(':author',$author,PDO::PARAM_STR);
-        $query->bindParam(':publisher',$publisher,PDO::PARAM_STR); // BIND NEW
+        $query->bindParam(':publisher',$publisher,PDO::PARAM_STR);
         $query->bindParam(':isbn',$isbn,PDO::PARAM_STR);
         $query->bindParam(':price',$price,PDO::PARAM_STR);
-        $query->bindParam(':copies',$copies,PDO::PARAM_INT); // BIND NEW
-        $query->bindParam(':edition',$edition,PDO::PARAM_STR); // BIND NEW
-        $query->bindParam(':description',$description,PDO::PARAM_STR); // BIND NEW
-        $query->bindParam(':bookid',$bookid,PDO::PARAM_INT); // Use INT for safety
+        $query->bindParam(':copies',$copies,PDO::PARAM_INT);
+        $query->bindParam(':edition',$edition,PDO::PARAM_STR);
+        $query->bindParam(':description',$description,PDO::PARAM_STR);
+        $query->bindParam(':bookid',$bookid,PDO::PARAM_INT);
         $query->execute();
         
         $_SESSION['updatemsg']="Book information updated successfully!";
@@ -144,7 +144,7 @@ if(strlen($_SESSION['alogin'])==0) {
         }
         .preview-box {
             width: 100%;
-            margin-bottom: 30px; /* Space between image and upload button */
+            margin-bottom: 30px;
             display: block;
         }
         .img-preview {
@@ -203,8 +203,8 @@ if(strlen($_SESSION['alogin'])==0) {
             flex-wrap: wrap;
         }
         .input-row .form-group { flex: 1; min-width: 200px; }
-
-        /* Custom File Upload Styling */
+        
+        /* File Upload */
         .file-upload-wrapper {
             position: relative;
             overflow: hidden;

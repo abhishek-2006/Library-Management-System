@@ -7,7 +7,6 @@ function isActive($link) {
 
 // --- FETCH APP NAME FROM DB ---
 try {
-    // Using the confirmed table name: tbllibrarysettings
     $sql_app = "SELECT SettingValue FROM tbllibrarysettings WHERE SettingName = 'AppName'";
     $query_app = $dbh->prepare($sql_app);
     $query_app->execute();
@@ -19,7 +18,7 @@ try {
     // Fail silently, use default name
 }
 
-// Assuming $_SESSION['alogin'] holds the admin identifier (e.g., email)
+// Assuming $_SESSION['alogin'] holds the admin identifier
 $adminName = isset($_SESSION['alogin']) ? explode('@', $_SESSION['alogin'])[0] : 'Admin';
 ?>
 
@@ -64,7 +63,7 @@ $adminName = isset($_SESSION['alogin']) ? explode('@', $_SESSION['alogin'])[0] :
                 <a href="manage-authors.php" class="dropdown-item <?php echo isActive('manage-authors.php'); ?>">Manage Authors</a>
                 <div class="dropdown-divider"></div> 
 
-                <!-- PUBLISHERS (NEW) -->
+                <!-- PUBLISHERS-->
                 <a href="add-publisher.php" class="dropdown-item <?php echo isActive('add-publisher.php'); ?>">Add Publisher</a>
                 <a href="manage-publishers.php" class="dropdown-item <?php echo isActive('manage-publishers.php'); ?>">Manage Publishers</a>
             </div>
