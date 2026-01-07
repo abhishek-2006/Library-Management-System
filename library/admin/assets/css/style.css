@@ -1,5 +1,4 @@
-﻿/* GLOBAL VARIABLES & RESET */
-:root { 
+﻿:root { 
     /* Color Palette */
     --primary-indigo: #4f46e5;      /* Main brand color */
     --info-blue: #3B82F6;           /* Info card/state */
@@ -8,7 +7,8 @@
     --success-green: #10b981;       /* Success card/state */
     --warning-yellow: #F59E0B;      /* Warning card/state */
     --danger-bg: #FEE2E2;           
-    --success-bg: #D1FAE5;          
+    --success-bg: #D1FAE5;
+    --accent-orange: #f97316;      
     
     /* Backgrounds & Text */
     --bg-light: #f9fafb;            
@@ -24,8 +24,7 @@
     --footer-text: #9ca3af;         
     --footer-hover: #f59e0b;        
 
-    /* General */
-    --border-radius: 6px;
+    --border-radius: 8px;
     
     /* Quick Access Card Border Colors */
     --qa-border-green: #22C55E; 
@@ -133,7 +132,7 @@ body {
 }
 .logout-btn i { font-size: 0.9em; }
 
-/* === NAVIGATION MENU === */
+/* NAVIGATION MENU */
 .menu-section {
     background: var(--primary-indigo); 
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
@@ -220,7 +219,6 @@ body {
     margin: 0 10px;
 }
 
-
 /* DASHBOARD & COMMON CONTENT STYLES */
 .header-title-main { 
     font-size: 2.2rem; 
@@ -293,7 +291,7 @@ body {
 .card-success .stat-icon { color: var(--success-green); }
 
 
-/* QUICK ACCESS SECTION STYLES (With Left Border) */
+/* QUICK ACCESS SECTION STYLES */
 .quick-access-section {
     padding-top: 20px;
 }
@@ -303,13 +301,13 @@ body {
     gap: 25px;
     padding-bottom: 40px;
 }
-/* QUICK ACCESS CARD STYLES (Refined for Bold Statistics) */
+/* QUICK ACCESS CARD STYLES */
 .feature-card {
     display: block;
     padding: 30px 25px;
     border-radius: 12px;
     background: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Stronger shadow */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     align-items: center;
@@ -320,7 +318,7 @@ body {
 }
 .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Stronger hover shadow */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 .feature-icon {
     font-size: 3.5rem; 
@@ -328,7 +326,7 @@ body {
     text-align: center;
     align-items: center;
     justify-content: center;
-    opacity: 0.85; /* Slight opacity for a modern look */
+    opacity: 0.85;
 }
 .feature-value {
     font-size: 2.8rem; 
@@ -434,17 +432,6 @@ body {
 
 /* MANAGE-BOOKS.PHP */
 
-/* --- 1. GLOBAL VARIABLES & BASE RESET --- */
-:root {
-    --primary-indigo: #4f46e5;      /* Main brand color */
-    --accent-orange: #f97316;       /* Highlight color */
-    --danger-red: #dc2626;          
-    --bg-light: #f9fafb;            /* Content background */
-    --text-dark: #1f2937;           /* Dark text */
-    --text-gray: #6c757d;           
-    --border-radius: 8px;
-}
-
 * { box-sizing: border-box; }
 
 .container { 
@@ -465,7 +452,6 @@ body {
 .col-md-10 { width: 83.3333%; padding-left: 15px; padding-right: 15px; margin-bottom: 20px; }
 
 .col-md-offset-1 {
-    /* If the HTML still uses col-md-offset-x, this ensures it works for centering */
     margin-left: auto;
     margin-right: auto;
     float: none;
@@ -473,7 +459,6 @@ body {
 .row.pad-botm { 
     margin-bottom: 30px;
 }
-/* Add a style to ensure the specific form row centers the content */
 .row .col-md-10 {
     margin-left: auto;
     margin-right: auto;
@@ -494,7 +479,7 @@ body {
     font-weight: 700;
     color: var(--text-dark);
     border-bottom: 3px solid var(--primary-indigo); 
-    background: #fafafa; /* Very slight blue tint */
+    background: #fafafa;
     border-top-left-radius: 12px; 
     border-top-right-radius: 12px;    
     border-radius: 12px 12px 0 0;
@@ -645,15 +630,15 @@ body {
 
 /* --- Table Column Specificity --- */
 .custom-table th.image-col-head {
-    width: 80px; /* Give the header a fixed, narrow width */
+    width: 80px;
     padding-left: 0;
     padding-right: 0;
 }
 
 .custom-table td.image-col {
-    width: 80px; /* Give the column data cell a fixed, narrow width */
+    width: 80px;
     text-align: center;
-    padding: 8px; /* Reduce padding slightly for a tighter fit */
+    padding: 8px;
 }
 
 /* --- Image Thumbnail Styles --- */
@@ -854,7 +839,7 @@ textarea.form-control {
     border-color: #a7f3d0;
     color: #065f46;
 }
-.alert-error, .alert-danger { /* For the 'Student ID not found.' error */
+.alert-error, .alert-danger {
     background-color: #fee2e2;
     border-color: #fecaca;
     color: #991b1b;
@@ -876,12 +861,10 @@ textarea.form-control {
     resize: vertical;
 }
 
-/* ----------------------------------------------------------------- */
-/* --- Image Preview Container Styles --- */
-/* ----------------------------------------------------------------- */
+/* Image Preview Container Styles */
 .image-preview-container {
-    width: 120px; /* Small fixed width */
-    height: 150px; /* Small fixed height (adjust as needed) */
+    width: 120px;
+    height: 150px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     background-color: #f8f8f8;
@@ -892,19 +875,16 @@ textarea.form-control {
 }
 
 .image-preview-container img {
-    /* Ensure the image scales neatly within the container */
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* Prevents stretching */
+    object-fit: contain;
 }
 
-/* Adjust the custom file input layout slightly */
 .custom-file-upload-wrapper {
     display: flex;
     align-items: center;
 }
 
-/* Redefine the file label/button to match previous styling, if needed */
 .custom-file-upload-label {
     display: inline-block;
     cursor: pointer;
@@ -956,11 +936,6 @@ textarea.form-control {
 
 .label-danger { background-color: #d9534f; }
 .label-success { background-color: #5cb85c; }
-
-/*
- * Admin Book Requests Styles
- * Used for manage-book-requests.php to visually enhance the request list.
- */
 
 /* General Card/Panel Styling */
 .panel {
@@ -1088,7 +1063,6 @@ textarea.form-control {
 .action-btns .btn-default:hover {
     background-color: #d8e0e6;
 }
-/* Highlighting for unread messages */
 .unread-message-row {
     font-weight: 600; 
     background-color: #fefee3; /* Very light, professional yellow */
@@ -1128,12 +1102,12 @@ textarea.form-control {
 /* Status Badges - Flat Design */
 .status-badge {
     padding: 6px 14px;
-    border-radius: 50px; /* Pill shape */
+    border-radius: 50px;
     font-size: 0.8em;
     font-weight: 700;
     letter-spacing: 0.5px;
     display: inline-block;
-    min-width: 70px; /* Consistent width */
+    min-width: 70px;
     text-align: center;
 }
 .status-badge.new { 
@@ -1145,7 +1119,6 @@ textarea.form-control {
     color: white; 
 } 
 
-/* ACTION BUTTONS - NEW MODERN STYLES */
 .action-btns {
     white-space: nowrap; 
     display: flex;
@@ -1209,8 +1182,6 @@ textarea.form-control {
     color: #34495e; /* Ensure icon is dark */
 }
 
-
-/* Responsive adjustments for smaller screens (kept from previous version) */
 @media (max-width: 768px) {
     .action-btns {
         flex-direction: column; 
@@ -1268,7 +1239,6 @@ textarea.form-control {
     background-color: #d8e0e6;
 }
 
-/* Primary Action Button (Yes/Confirm) - Color specific to the action */
 .confirm-modal-actions .btn-modal-confirm {
     color: white;
     border: none;
@@ -1295,15 +1265,14 @@ textarea.form-control {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* Styles for the 'x' close button at the top-right of the modal */
 #closeModal {
     color: #999; /* Lighter grey for the 'x' */
     float: right;
-    font-size: 30px; /* Make it a bit larger */
+    font-size: 30px;
     font-weight: lighter;
     cursor: pointer;
     line-height: 1;
-    margin-left: 10px; /* Space from content */
+    margin-left: 10px;
     transition: color 0.2s ease;
 }
 
@@ -1313,21 +1282,19 @@ textarea.form-control {
     text-decoration: none;
 }
 
-
 /* Modal Content - Enhanced appearance */
-#messageDetailModal > div { /* This targets the actual modal content box */
+#messageDetailModal > div {
     background-color:#fff; 
     margin:10% auto; 
     padding:25px; 
     border:none; 
-    border-radius: 12px; /* More rounded corners */
-    box-shadow: 0 8px 30px rgba(0,0,0,0.25); /* Deeper shadow for prominence */
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.25);
     width:90%; 
-    max-width:650px; /* Slightly wider modal */
-    animation: fadeIn 0.3s ease-out; /* Smooth fade-in effect */
+    max-width:650px; 
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* Animation for modal fade-in */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1338,27 +1305,27 @@ textarea.form-control {
     color: #34495e; /* Darker title for better readability */
     margin-bottom: 10px; 
     font-weight: 700;
-    display: flex; /* For icon alignment */
+    display: flex;
     align-items: center;
 }
 #messageDetailModal h4#modalTitle i {
-    margin-right: 8px; /* Space between icon and text */
+    margin-right: 8px;
     color: #007bff; /* Primary color for the icon */
 }
 
 #messageDetailModal p strong {
-    color: #555; /* Slightly darker labels */
+    color: #555;
 }
 
 #modalSubject {
-    background-color: #e9ecef; /* Lighter background for subject */
-    border-left: 4px solid #007bff; /* Thicker, more prominent border */
+    background-color: #e9ecef;
+    border-left: 4px solid #007bff;
     font-weight: 600;
     color: #333;
 }
 
 #modalDetails {
-    background-color: #f8f9fa; /* Very light grey for details background */
+    background-color: #f8f9fa;
     border: 1px solid #dee2e6;
     color: #444;
 }

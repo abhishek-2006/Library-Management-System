@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL); 
 require('includes/config.php');
 
@@ -34,7 +33,6 @@ if(strlen($_SESSION['alogin'])==0) {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Manage Publishers</title>
     
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
@@ -79,27 +77,25 @@ if(strlen($_SESSION['alogin'])==0) {
                                     </tr>
                                 </thead>
                                 <tbody>
-<?php 
-$cnt=1;
-if($query->rowCount() > 0)
-{
-foreach($results as $result)
-{               
-?>                                      
-                                    <tr class="odd gradeX">
-                                        <td class="center"><?php echo htmlentities($cnt);?></td>
-                                        <td class="center"><?php echo htmlentities($result->PublisherName ?? '');?></td>
-                                        <td class="center"><?php echo htmlentities($result->CreationDate ?? '');?></td>
-                                        <td class="center"><?php echo htmlentities($result->UpdationDate ?? '');?></td>
-                                        <td class="center">
-                                            <a href="edit-publisher.php?id=<?php echo htmlentities($result->id);?>"><button class="custom-btn btn-primary-theme"><i class="fa fa-edit "></i> Edit</button> 
-                                            
-                                            <a href="manage-publishers.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete this Publisher?');" >  
-                                            <button class="custom-btn btn-danger-theme"><i class="fa fa-trash"></i> Delete</button>
-                                            </a>
-                                        </td>
-                                    </tr>
-<?php $cnt=$cnt+1;}} ?>                                      
+                                    <?php 
+                                    $cnt=1;
+                                    if($query->rowCount() > 0) {
+                                        foreach($results as $result) {?>
+                                            <tr class="odd gradeX">
+                                                <td class="center"><?php echo htmlentities($cnt);?></td>
+                                                <td class="center"><?php echo htmlentities($result->PublisherName ?? '');?></td>
+                                                <td class="center"><?php echo htmlentities($result->CreationDate ?? '');?></td>
+                                                <td class="center"><?php echo htmlentities($result->UpdationDate ?? '');?></td>
+                                                <td class="center">
+                                                    <a href="edit-publisher.php?id=<?php echo htmlentities($result->id);?>">
+                                                        <button class="custom-btn btn-primary-theme"><i class="fa fa-edit "></i> Edit</button> 
+                                                    </a>
+                                                    <a href="manage-publishers.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete this Publisher?');" >  
+                                                        <button class="custom-btn btn-danger-theme"><i class="fa fa-trash"></i> Delete</button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                    <?php $cnt=$cnt+1;}} ?>                                  
                                 </tbody>
                             </table>
                         </div>

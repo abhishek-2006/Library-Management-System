@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -15,7 +14,6 @@ else {
     $query_fetch->execute();
     $results = $query_fetch->fetchAll(PDO::FETCH_OBJ);
 
-    // Reformat results into an associative array for easy access: ['SettingName' => 'SettingValue']
     if($results) {
         foreach($results as $row) {
             $settings[$row->SettingName] = $row->SettingValue;
@@ -48,7 +46,6 @@ else {
 
             $dbh->beginTransaction();
 
-            // Loop through the updates and execute a separate UPDATE statement for each setting
             $update_sql = "UPDATE tbllibrarysettings SET SettingValue = :value WHERE SettingName = :name";
             $update_query = $dbh->prepare($update_sql);
 
@@ -79,7 +76,6 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Manage System Settings</title>
     
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     

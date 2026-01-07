@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -8,7 +7,7 @@ if(strlen($_SESSION['alogin'])==0) {
     exit();
 }
 else {
-    // --- 1. Fetch Categories, Authors and Publishers for Dropdowns ---
+    // 1. Fetch Categories, Authors and Publishers for Dropdowns
     
     // Fetch Authors
     $sql_authors = "SELECT id, AuthorName FROM tblauthors";
@@ -28,7 +27,7 @@ else {
     $query_publishers->execute();
     $publishers = $query_publishers->fetchAll(PDO::FETCH_OBJ);
 
-    // --- 2. Form Submission Handling (POST) ---
+    // 2. Form Submission Handling
     if(isset($_POST['add'])) {
         $bookName = $_POST['bookname'];
         $catid = $_POST['category'];
@@ -41,7 +40,7 @@ else {
         $bookEdition = $_POST['edition'];
         $bookDescription = $_POST['description'];
 
-        // --- File Upload Logic ---
+        // 2. File Upload Logic
         $bookImage = '';
         $target_dir = "assets/img/";
         $uploadOk = 1;
@@ -78,8 +77,6 @@ else {
             }
         }
         
-        // --- Database Insertion ---
-        if ($uploadOk == 1) {
             // Check if ISBN already exists
             $check_sql = "SELECT id FROM tblbooks WHERE ISBNNumber=:isbn";
             $check_query = $dbh->prepare($check_sql);
@@ -109,14 +106,13 @@ else {
                 
                 if($insert_query->execute()) {
                     $_SESSION['msg'] = "Book added successfully!";
-                    header('location:add-book.php'); 
+                    header('location: add-book.php'); 
                     exit();
                 } else {
                     $_SESSION['error'] = "Error adding book to database. Please try again.";
                 }
             }
         }
-    }
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -125,7 +121,6 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Add Book</title>
     
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
@@ -182,7 +177,7 @@ else {
                                     </label>
                                     <span id="file-chosen-text">No file chosen</span>
                                 </div>
-                                <span class="help-text">Max 5MB. Allowed: JPG, JPEG, PNG, GIF.</span>
+                                <span class="help-text">Max 5MB. Allowed: JPG, JPEG, PNG, WEBP.</span>
                             </div>
                             
                             <div class="form-group">

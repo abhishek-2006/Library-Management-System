@@ -1,5 +1,5 @@
 <?php 
-// Function to check if a link is active (Requires $currentPage to be set in PHP)
+// Function to check if a link is active
 function isActive($link) {
     $currentFile = basename($_SERVER['PHP_SELF']);
     return (isset($GLOBALS['currentPage']) && $GLOBALS['currentPage'] === $link) || ($currentFile === $link) ? 'active-link' : '';
@@ -18,7 +18,6 @@ try {
     // Fail silently, use default name
 }
 
-// Assuming $_SESSION['alogin'] holds the admin identifier
 $adminName = isset($_SESSION['alogin']) ? explode('@', $_SESSION['alogin'])[0] : 'Admin';
 ?>
 

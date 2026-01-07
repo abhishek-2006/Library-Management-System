@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL); 
 require('includes/config.php');
 
@@ -9,7 +8,6 @@ if(strlen($_SESSION['alogin'])==0) {
 } else { 
     
     // --- Delete Logic ---
-    // The primary key 'id' is passed via the 'del' URL parameter
     if(isset($_GET['del'])) {
         $id_to_delete = intval($_GET['del']); 
         
@@ -37,7 +35,6 @@ if(strlen($_SESSION['alogin'])==0) {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Online Library Management System | Manage Categories</title>
     
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="assets/css/style.css" rel="stylesheet" /> 

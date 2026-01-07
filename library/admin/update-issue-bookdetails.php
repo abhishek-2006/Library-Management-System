@@ -1,6 +1,4 @@
 <?php
-session_start();
-// Set error reporting to E_ALL
 error_reporting(E_ALL); 
 require('includes/config.php');
 
@@ -31,8 +29,6 @@ if(strlen($_SESSION['alogin'])==0) {
         header('location:manage-issued-books.php');
         exit;
     }
-
-    // 3. Start HTML Content Generation
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,7 +39,6 @@ if(strlen($_SESSION['alogin'])==0) {
     <meta name="author" content="" />
     <title>Online Library Management System | Issued Book Details</title>
     <link href="assets/css/style.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
 
@@ -71,28 +66,29 @@ if(strlen($_SESSION['alogin'])==0) {
             success:function(data) {
                 $("#get_book_name").html(data);
                 $("#loaderIcon").hide();
-            },error:function (){}});}
+            },error:function (){}
+        });
+    }
     </script>
-<style type="text/css">
+    <style type="text/css">
         /* General Page Background (Subtle Dark/Light Contrast) */
         body {
-            background-color: #f7f9fb; /* Very light, slightly cool gray */
+            background-color: #f7f9fb;
         }
         
         /* Base Container */
         .custom-center-container {
             width: 70%;
             max-width: 850px;
-            margin: 30px auto; /* Added margin for visual lift */
+            margin: 30px auto;
         }
 
         /* Panel Styling: The Card */
         .custom-panel {
-            border: none; /* Removed hard border for a cleaner look */
-            border-radius: 12px; /* Smoother corners */
+            border: none;
+            border-radius: 12px;
             margin-bottom: 30px;
             background-color: #ffffff;
-            /* Stronger, more modern elevation */
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
@@ -101,8 +97,7 @@ if(strlen($_SESSION['alogin'])==0) {
         .custom-panel-heading {
             padding: 1.25rem 1.5rem;
             color: #ffffff; 
-            /* Striking Teal/Cyan Solid Color */
-            background-color: #00bcd4; 
+            background-color: #00bcd4; /* Accent Color */
             border-bottom: 3px solid #00a4b8; /* Darker bottom line for depth */
             font-size: 1.4rem;
             font-weight: 700;
@@ -114,13 +109,13 @@ if(strlen($_SESSION['alogin'])==0) {
             padding: 2rem;
         }
 
-        /* Detail Group Styling: Clean separation */
+        /* Detail Group Styling */
         .custom-form-group {
             padding: 1rem 0;
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            border-bottom: 1px solid #eef1f5; /* Faint separator line */
+            border-bottom: 1px solid #eef1f5;
         }
         
         .custom-panel-body .custom-form-group:last-of-type {
@@ -129,14 +124,14 @@ if(strlen($_SESSION['alogin'])==0) {
 
         .custom-form-group label {
             font-weight: 600; 
-            color: #495057; /* Darker label for better contrast */
+            color: #495057;
             flex-shrink: 0;
             margin-right: 2rem; 
             font-size: 1.05rem;
         }
 
         .detail-value {
-            color: #212529; /* Near black for excellent readability */
+            color: #212529;
             font-size: 1.1rem;
             text-align: right; 
             flex-grow: 1; 
@@ -158,11 +153,11 @@ if(strlen($_SESSION['alogin'])==0) {
             transition: all 0.2s;
         }
         .custom-input-text:focus {
-             border-color: #00bcd4; /* Accent color on focus */
+             border-color: #00bcd4;
              box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.3);
         }
 
-        /* Button Styling: Solid and Accented */
+        /* Button Styling */
         .custom-btn {
             display: inline-block;
             padding: 12px 28px;
@@ -198,105 +193,101 @@ if(strlen($_SESSION['alogin'])==0) {
             font-weight: 500;
         }
     </style>
-    
 </head>
 <body>
-<?php include('includes/header.php');?>
-<div class="content-wrapper">
-    <div class="container">
-        <div class="page-header-wrapper">
-            <h4 class="header-line">Issued Book Details</h4>
-        </div>
-        <div class="row">
-
-<?php 
-// 4. Database Query Execution
-$rid=intval($_GET['rid']);
-$sql = "SELECT tblstudents.FullName,tblbooks.BookName,tblbooks.ISBNNumber,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid,tblissuedbookdetails.fine,tblissuedbookdetails.ReturnStatus from tblissuedbookdetails join tblstudents on tblstudents.StudentId=tblissuedbookdetails.StudentId join tblbooks on tblbooks.id=tblissuedbookdetails.BookId where tblissuedbookdetails.id=:rid";
-$query = $dbh -> prepare($sql);
-$query->bindParam(':rid',$rid,PDO::PARAM_STR);
-$query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
-$cnt=1;
-
-// 5. Conditional Display Logic
-if($query->rowCount() > 0) { ?>
-<div class="custom-center-container"> 
-    <div class="custom-panel custom-panel-info">
-        <div class="custom-panel-heading">
-            Issued Book Details
-        </div>
-        <div class="custom-panel-body">
-            <form role="form" method="post">
-<?php
-    foreach($results as $result) { ?> 
-                <div class="custom-form-group">
-                    <label>Student Name :</label>
-                    <span class="detail-value"><?php echo htmlentities($result->FullName ?? ''); ?></span>
-                </div>
-
-                <div class="custom-form-group">
-                    <label>Book Name :</label>
-                    <span class="detail-value"><?php echo htmlentities($result->BookName ?? ''); ?></span>
-                </div>
-
-                <div class="custom-form-group">
-                    <label>ISBN :</label>
-                    <span class="detail-value"><?php echo htmlentities($result->ISBNNumber ?? ''); ?></span>
-                </div>
-
-                <div class="custom-form-group">
-                    <label>Book Issued Date :</label>
-                    <span class="detail-value"><?php echo htmlentities($result->IssuesDate ?? ''); ?></span>
-                </div>
-
-                <div class="custom-form-group">
-                    <label>Book Returned Date :</label>
-                    <span class="detail-value">
-                    <?php 
-                        if(empty($result->ReturnDate)) {
-                            echo "Not Return Yet";
-                        } else {
-                            echo htmlentities($result->ReturnDate ?? '');
-                        }
-                        ?>
-                    </span>
-                </div>
-
-                <div class="custom-form-group">
-                    <label for="fine">Fine (in INR) :</label>
-                    <?php 
-                    if(empty($result->fine) || $result->fine==0) {?>
-                        <input class="custom-input-text" type="text" name="fine" id="fine" value="0.00" required />
-                        <?php } else {
-                            echo '<span class="detail-value">'.htmlentities($result->fine ?? '0.00').'</span>';
-                        } ?>
-                </div>
-
-                <?php if($result->ReturnStatus==0){?>
-                    <button type="submit" name="return" id="submit" class="custom-btn btn-primary-theme">Return Book </button>
-                <?php } else { ?>
-                    <div class="success-message">Book already returned on: <?php echo htmlentities($result->ReturnDate ?? ''); ?></div>
-                <?php } ?>
-                
-                <?php } // End of foreach?>
-</form>
-</div> 
-</div> 
-</div> 
-<?php } else { ?>
-    <div class="custom-center-container">
-        <div class="custom-panel custom-panel-info">
-            <div class="custom-panel-body">
-                <div class="error-message">Error: Issued Book Details not found.</div>
+    <?php include('includes/header.php');?>
+    <div class="content-wrapper">
+        <div class="container">
+            <div class="page-header-wrapper">
+                <h4 class="header-line">Issued Book Details</h4>
             </div>
-        </div>
-    </div>
-<?php } ?>
+            <div class="row">
+                <?php 
+                // 4. Database Query Execution
+                $rid=intval($_GET['rid']);
+                $sql = "SELECT tblstudents.FullName,tblbooks.BookName,tblbooks.ISBNNumber,tblissuedbookdetails.IssuesDate,tblissuedbookdetails.ReturnDate,tblissuedbookdetails.id as rid,tblissuedbookdetails.fine,tblissuedbookdetails.ReturnStatus from tblissuedbookdetails join tblstudents on tblstudents.StudentId=tblissuedbookdetails.StudentId join tblbooks on tblbooks.id=tblissuedbookdetails.BookId where tblissuedbookdetails.id=:rid";
+                $query = $dbh -> prepare($sql);
+                $query->bindParam(':rid',$rid,PDO::PARAM_STR);
+                $query->execute();
+                $results=$query->fetchAll(PDO::FETCH_OBJ);
+                $cnt=1;
 
-</div> </div> </div> <?php include('includes/footer.php');?>
-<script src="assets/js/bootstrap.js"></script> 
+                // 5. Conditional Display Logic
+                if($query->rowCount() > 0) { ?>
+                    <div class="custom-center-container"> 
+                        <div class="custom-panel custom-panel-info">
+                            <div class="custom-panel-heading">
+                                Issued Book Details
+                            </div>
+                            <div class="custom-panel-body">
+                                <form role="form" method="POST">
+                                    <?php
+                                    foreach($results as $result) { ?> 
+                                        <div class="custom-form-group">
+                                            <label>Student Name :</label>
+                                            <span class="detail-value"><?php echo htmlentities($result->FullName ?? ''); ?></span>
+                                        </div>
 
+                                        <div class="custom-form-group">
+                                            <label>Book Name :</label>
+                                            <span class="detail-value"><?php echo htmlentities($result->BookName ?? ''); ?></span>
+                                        </div>
+
+                                        <div class="custom-form-group">
+                                            <label>ISBN :</label>
+                                            <span class="detail-value"><?php echo htmlentities($result->ISBNNumber ?? ''); ?></span>
+                                        </div>
+
+                                        <div class="custom-form-group">
+                                            <label>Book Issued Date :</label>
+                                            <span class="detail-value"><?php echo htmlentities($result->IssuesDate ?? ''); ?></span>
+                                        </div>
+
+                                        <div class="custom-form-group">
+                                            <label>Book Returned Date :</label>
+                                            <span class="detail-value">
+                                            <?php 
+                                                if(empty($result->ReturnDate)) {
+                                                    echo "Not Return Yet";
+                                                } else {
+                                                    echo htmlentities($result->ReturnDate ?? '');
+                                                }?>
+                                            </span>
+                                        </div>
+
+                                        <div class="custom-form-group">
+                                            <label for="fine">Fine (in INR) :</label>
+                                            <?php 
+                                            if(empty($result->fine) || $result->fine==0) {?>
+                                                <input class="custom-input-text" type="text" name="fine" id="fine" value="0.00" required />
+                                                <?php } else {
+                                                    echo '<span class="detail-value">'.htmlentities($result->fine ?? '0.00').'</span>';
+                                                } ?>
+                                        </div>
+
+                                        <?php if($result->ReturnStatus==0) {?>
+                                            <button type="submit" name="return" id="submit" class="custom-btn btn-primary-theme">Return Book </button>
+                                        <?php } else { ?>
+                                            <div class="success-message">Book already returned on: <?php echo htmlentities($result->ReturnDate ?? ''); ?></div>
+                                        <?php }} ?>
+                                </form>
+                            </div> 
+                        </div> 
+                    </div> 
+                <?php } else { ?>
+                    <div class="custom-center-container">
+                        <div class="custom-panel custom-panel-info">
+                            <div class="custom-panel-body">
+                                <div class="error-message">Error: Issued Book Details not found.</div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+            </div> 
+        </div> 
+    </div> 
+    <?php include('includes/footer.php');?>
+    <script src="assets/js/bootstrap.js"></script> 
 </body>
 </html>
 <?php } ?>

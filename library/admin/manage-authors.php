@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL); 
 require('includes/config.php');
 
@@ -17,7 +16,7 @@ if(strlen($_SESSION['alogin'])==0) {
         $query -> execute();
         // Set message and redirect
         $_SESSION['delmsg']="Author deleted successfully"; 
-        header('location:manage-authors.php');
+        header('location: manage-authors.php');
         exit;
     }
     
@@ -43,14 +42,12 @@ if(strlen($_SESSION['alogin'])==0) {
     #dataTables {
         border-collapse: collapse;
         width: 100%;
-        /* Ensure the DataTable container is centered if it doesn't span full width */
         margin-left: auto;
         margin-right: auto;
     }
     #dataTables th, #dataTables td {
         padding: 14px 12px;
         text-align: left;
-        /* Subtle row separation */
         border-bottom: 1px solid #e9edf1;
         font-size: 14px;
         vertical-align: middle;
@@ -68,16 +65,16 @@ if(strlen($_SESSION['alogin'])==0) {
     
     /* Hover Row Theme */
     #dataTables tbody tr:hover {
-        background-color: #eaf0f7; /* Soft blue highlight on hover */
+        background-color: #eaf0f7;
         cursor: pointer;
     }
     
-    /* Alternating Row Stripe Theme (Zebra Striping) */
+    /* Alternating Row Stripe Theme */
     #dataTables tbody tr:nth-child(even) {
-        background-color: #fcfcfc; /* Very subtle stripe */
+        background-color: #fcfcfc;
     }
 
-    /* 4. Action Button Styling (Reusing previous themes) */
+    /* 4. Action Button Styling */
     .custom-btn {
         display: inline-flex;
         align-items: center;
@@ -148,25 +145,24 @@ if(strlen($_SESSION['alogin'])==0) {
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php 
-$cnt=1;
-if($query->rowCount() > 0) {
-foreach($results as $result) {               
-?>                                      
-                                        <tr class="odd gradeX">
-                                            <td class="center"><?php echo htmlentities($cnt);?></td>
-                                            <td class="center"><?php echo htmlentities($result->AuthorName ?? '');?></td>
-                                            <td class="center"><?php echo htmlentities($result->creationDate ?? '');?></td>
-                                            <td class="center"><?php echo htmlentities($result->updationDate ?? '');?></td>
-                                            <td class="center">
-                                                <a href="edit-author.php?id=<?php echo htmlentities($result->id);?>"><button class="custom-btn btn-primary-theme"><i class="fa fa-edit "></i> Edit</button> 
-                                                
-                                                <a href="manage-authors.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete this author?');" >  
-                                                <button class="custom-btn btn-danger-theme"><i class="fa fa-trash"></i> Delete</button>
-                                                </a>
-                                            </td>
-                                        </tr>
-<?php $cnt=$cnt+1;}} ?>                                      
+                                        <?php 
+                                        $cnt=1;
+                                        if($query->rowCount() > 0) {
+                                            foreach($results as $result) { ?>                              
+                                                <tr class="odd gradeX">
+                                                    <td class="center"><?php echo htmlentities($cnt);?></td>
+                                                    <td class="center"><?php echo htmlentities($result->AuthorName ?? '');?></td>
+                                                    <td class="center"><?php echo htmlentities($result->creationDate ?? '');?></td>
+                                                    <td class="center"><?php echo htmlentities($result->updationDate ?? '');?></td>
+                                                    <td class="center">
+                                                        <a href="edit-author.php?id=<?php echo htmlentities($result->id);?>"><button class="custom-btn btn-primary-theme"><i class="fa fa-edit "></i> Edit</button> 
+                                                        
+                                                        <a href="manage-authors.php?del=<?php echo htmlentities($result->id);?>" onclick="return confirm('Are you sure you want to delete this author?');" >  
+                                                        <button class="custom-btn btn-danger-theme"><i class="fa fa-trash"></i> Delete</button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <?php $cnt=$cnt+1;}} ?>                                      
                                     </tbody>
                                 </table>
                             </div>

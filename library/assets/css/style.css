@@ -22,7 +22,6 @@
     --footer-hover: #f59e0b;
 }
 
-/* GLOBAL */
 * { box-sizing: border-box; }
 body {
     font-family: "Inter", "Segoe UI", Roboto, sans-serif;
@@ -204,9 +203,7 @@ body {
     color: var(--primary-indigo);
 }
 
-/* =================================================================
-    DASHBOARD & COMMON CONTENT STYLES
-   ================================================================= */
+/* DASHBOARD & COMMON CONTENT STYLES */
 .header-title-main { 
     font-size: 2.2rem; 
     font-weight: 700; 
@@ -333,9 +330,7 @@ body {
 .feature-indigo .feature-icon { color: #4F46E5; }
 
 
-/* =================================================================
-    LIBRARY HOURS STYLES (library-hours.php)
-   ================================================================= */
+/* LIBRARY HOURS STYLES (library-hours.php) */
 .dynamic-content-box {
     background: #ffffff;
     padding: 30px;
@@ -398,9 +393,7 @@ body {
     color: #4338CA;
 }
 
-/* =================================================================
-    FOOTER STYLES
-   ================================================================= */
+/* FOOTER STYLES */
 .footer-wrapper { 
     background: var(--footer-bg); 
     color: var(--footer-text); 
@@ -426,9 +419,7 @@ body {
     border-color: var(--footer-hover); 
 }
 
-/* =================================================================
-    RESPONSIVENESS (Media Queries)
-   ================================================================= */
+/* RESPONSIVENESS (Media Queries) */
 @media (max-width: 1024px) {
     .dashboard-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
     .quick-access-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
@@ -451,9 +442,7 @@ body {
     .menu-nav { justify-content: space-around; gap: 10px; }
 }
 
-/* =================================================================
-    CONTACT LIBRARIAN FORM STYLES (contact-librarian.php)
-   ================================================================= */
+/* CONTACT LIBRARIAN FORM STYLES (contact-librarian.php) */
 
 .form-container-box {
     max-width: 650px;
@@ -548,7 +537,7 @@ body {
     border-radius: 6px;
     background-color: #f8d7da; /* Light red */
     color: #842029; /* Dark red text */
-    border: 1px solid #f5c2c7;
+    border: 1px solid #f5c2c7; /* Red border */
     font-weight: 500;
 }
 
@@ -564,9 +553,7 @@ body {
     margin-left: 3px;
 }
 
-/* =================================================================
-    ISSUED BOOKS TABLE STYLES (issued-books.php)
-   ================================================================= */
+/* ISSUED BOOKS TABLE STYLES (issued-books.php) */
 
 .table-responsive-box {
     margin: 0 auto 40px auto;
@@ -697,7 +684,7 @@ body {
 }
 
 
-/* === RESPONSIVE TABLE STYLES === */
+/* RESPONSIVE TABLE STYLES */
 @media screen and (max-width: 768px) {
     .data-table, .data-table tbody, .data-table tr, .data-table td {
         display: block;
@@ -705,7 +692,7 @@ body {
     }
     
     .data-table thead {
-        display: none; /* Hide table headers (but not important for accessibility) */
+        display: none; /* Hide table headers */
     }
 
     .data-table tr {
@@ -786,7 +773,7 @@ body {
 .book-cover-lg {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ensure the full book cover is visible */
+    object-fit: contain;
     padding: 15px;
 }
 
@@ -800,7 +787,7 @@ body {
     padding: 15px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Allows details section to take remaining space */
+    flex-grow: 1;
 }
 
 .book-title-grid {
@@ -872,10 +859,10 @@ body {
 }
 
 .full-width-message {
-    grid-column: 1 / -1; /* Make empty state span the whole grid */
+    grid-column: 1 / -1;
 }
 
-/* --- MY PROFILE VIEW MODE STYLES --- */
+/* MY PROFILE VIEW MODE STYLES */
 
 .info-group {
     display: flex;
@@ -924,11 +911,10 @@ body {
 /* Edit Mode Toggle Logic (Hides the form by default) */
 .profile-edit-form-wrapper {
     display: none;
-    padding-top: 15px; /* Spacing above the form when visible */
+    padding-top: 15px;
 }
 
 /* When the checkbox is checked (Edit Profile button clicked), hide the view and show the form */
-/* Note: ~ is the general sibling combinator */
 #edit-toggle:checked ~ .profile-view-box {
     display: none;
 }
@@ -938,7 +924,7 @@ body {
 
 .form-input {
     width: 100%;
-    padding: 10px 15px; /* Defines size/height */
+    padding: 10px 15px;
     border: 1px solid #ced4da;
     border-radius: 6px;
     font-size: 1rem;
@@ -958,7 +944,7 @@ body {
     color: var(--danger-red);
 }
 
-/* 2. Hover Effect (for a nice UI change when the mouse is over it) */
+/* 2. Hover Effect */
 .hover\:text-red-700:hover {
     color: #B91C1C; /* A slightly darker red */
 }
@@ -973,12 +959,11 @@ body {
 }
 /* General Layout */
 .custom-center-container {
-    /* Mimics Bootstrap column offsetting */
     width: 83.33333333%; /* Equivalent to col-md-10 */
     margin: 0 auto;
 }
 
-/* Panel Styling (Replaces Bootstrap panel) */
+/* Panel Styling */
 .custom-panel {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -998,7 +983,7 @@ body {
     border-top-right-radius: 3px;
     color: #31708f; /* Dark blue text */
     background-color: #d9edf7; /* Light blue background */
-    border-color: #bce8f1;
+    border-color: #bce8f1; /* Light blue border */
     font-weight: bold;
 }
 
@@ -1010,13 +995,13 @@ body {
 .custom-form-group {
     margin-bottom: 15px;
     padding: 5px 0;
-    border-bottom: 1px dotted #eee; /* Separator for details */
+    border-bottom: 1px dotted #eee;
 }
 
 .custom-form-group label {
     font-weight: bold;
     display: inline-block;
-    width: 180px; /* Aligns the data consistently */
+    width: 180px;
     margin-right: 10px;
 }
 
@@ -1039,7 +1024,7 @@ body {
     border-radius: 4px;
 }
 
-/* Button Styling (Replaces Bootstrap buttons) */
+/* Button Styling */
 .custom-btn {
     display: inline-block;
     padding: 6px 12px;
@@ -1058,7 +1043,7 @@ body {
 .btn-primary-theme {
     color: #fff;
     background-color: #337ab7; /* Standard blue color */
-    border-color: #2e6da4;
+    border-color: #2e6da4; /* Darker blue border */
 }
 
 .success-message {
@@ -1072,9 +1057,9 @@ body {
 
 .error-message {
     padding: 10px;
-    background-color: #f2dede;
-    color: #a94442;
-    border: 1px solid #ebccd1;
+    background-color: #f2dede; /* Light red background */
+    color: #a94442; /* Dark red text */
+    border: 1px solid #ebccd1; /* Red border */
     border-radius: 4px;
     margin-top: 15px;
 }
@@ -1113,9 +1098,9 @@ body {
     background-color: #dc2626; 
 }
 
-/* --- GENERAL LAYOUT AND BASE --- */
+/* GENERAL LAYOUT AND BASE */
 body { 
-    background-color: #f7f9fc; /* Light, clean background */
+    background-color: #f7f9fc; /* Light background color */
     color: #333; 
     font-family: 'Open Sans', sans-serif;
 }
@@ -1129,22 +1114,22 @@ body {
 }
 .content-wrapper { padding-top: 30px; padding-bottom: 50px; }
 
-/* --- PAGE HEADER --- */
+/* PAGE HEADER */
 .header-line { 
     font-size: 26px; 
     font-weight: 700; 
-    color: #1a202c; 
-    border-bottom: 3px solid #6366f1; /* Primary Accent Color */
+    color: #1a202c; /* Dark text color */
+    border-bottom: 3px solid #6366f1; /* Indigo underline */
     padding-bottom: 10px; 
     margin-bottom: 30px;
 }
 
-/* --- PANEL/CARD STYLING (Form Container) --- */
+/* PANEL/CARD STYLING (Form Container) */
 .panel-default { 
     border: none; 
     margin-left: auto;
     margin-right: auto;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     overflow: hidden;
     background: #ffffff;
@@ -1158,7 +1143,7 @@ body {
     font-weight: 600;
 }
 
-/* --- FORM CONTROLS --- */
+/* FORM CONTROLS */
 .form-group label {
     font-weight: 600;
     color: #4b5563;
@@ -1175,7 +1160,7 @@ body {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 .form-control:focus {
-    border-color: #6366f1;
+    border-color: #6366f1; /* Indigo border on focus */
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
     outline: none;
 }

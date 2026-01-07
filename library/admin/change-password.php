@@ -1,7 +1,6 @@
 <?php
-session_start();
 error_reporting(E_ALL);
-require('includes/config.php'); // Assuming this connects to $dbh
+require('includes/config.php');
 
 if(strlen($_SESSION['alogin'])==0) { 
     // Security Check: Redirect if not logged in

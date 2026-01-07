@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(0);
 require('includes/config.php');
 
@@ -18,7 +17,7 @@ if(strlen($_SESSION['alogin'])==0) {
         header('location:manage-books.php');
     }
 
-    // --- Database Query for Books ---
+    // Database Query for Books
     $sql = "SELECT tblbooks.BookName, tblcategory.CategoryName, tblauthors.AuthorName, tblpublishers.PublisherName, tblbooks.ISBNNumber, tblbooks.BookPrice, tblbooks.bookCopies, tblbooks.regDate, tblbooks.id as bookid, tblbooks.bookImage 
         FROM tblbooks 
         JOIN tblcategory ON tblcategory.id = tblbooks.CatId 
@@ -36,7 +35,6 @@ if(strlen($_SESSION['alogin'])==0) {
     <meta name="description" content="Manage books for Online Library Management System" />
     <meta name="author" content="" />
     <title>Online Library Management System | Manage Books</title>
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
@@ -45,7 +43,7 @@ if(strlen($_SESSION['alogin'])==0) {
 </head>
 <body>
     <?php include('includes/header.php');?>
-<div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">

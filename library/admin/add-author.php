@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -8,7 +7,7 @@ if(strlen($_SESSION['alogin'])==0) {
     exit();
 }
 else {
-    // --- 1. Form Submission Handling (POST) ---
+    // 1. Form Submission Handling
     if(isset($_POST['add'])) {
         $author_name = $_POST['authorname'];
 
@@ -30,7 +29,7 @@ else {
             if($insert_query->execute()) {
                 $_SESSION['msg'] = "Author added successfully!";
                 // Redirect to the same page to clear the form and display message
-                header('location:add-author.php'); 
+                header('location: add-author.php'); 
                 exit();
             } else {
                 $_SESSION['error'] = "Error adding author. Please try again.";
@@ -43,9 +42,7 @@ else {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Add Author</title>
-    
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
+    <title>Add Author</title>    
     <link href="assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
@@ -98,8 +95,9 @@ else {
                     </div>
                 </div>
             </div>
-
-        </div> </div> <?php include('includes/footer.php');?>
+        </div> 
+    </div> 
+    <?php include('includes/footer.php');?>
 </body>
 </html>
 <?php } ?>

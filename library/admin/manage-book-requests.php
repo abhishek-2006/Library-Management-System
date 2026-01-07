@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -13,7 +12,6 @@ else {
         $requestId = intval($_GET['req_id']);
         $actionStatus = ($_GET['action'] == 'approve') ? 1 : 2; // 1=Approved, 2=Rejected, 0=Pending
 
-        // Using status=0 ensures we don't accidentally re-process an already actioned request
         $sql_update = "UPDATE tblbookrequests SET status=:status, actionDate=CURRENT_TIMESTAMP WHERE id=:rid AND status=0";
         $query_update = $dbh->prepare($sql_update);
         $query_update->bindParam(':status', $actionStatus, PDO::PARAM_INT);
@@ -32,7 +30,7 @@ else {
         exit();
     }
 
-    // --- Fetch ALL Book Requests ---
+    // Fetch ALL Book Requests
     $sql_requests = "
         SELECT 
             r.id, 
@@ -63,7 +61,6 @@ else {
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Manage Book Requests</title>
     
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>

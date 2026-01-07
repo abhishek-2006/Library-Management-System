@@ -1,5 +1,5 @@
 <?php
-session_start(); 
+include_once 'includes/config.php';
 $_SESSION = array();
 
 // Check if the session uses cookies and delete the session cookie

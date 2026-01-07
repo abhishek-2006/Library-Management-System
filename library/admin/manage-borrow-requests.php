@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -8,7 +7,7 @@ if(strlen($_SESSION['alogin'])==0) {
     exit();
 }
 else {
-    // --- BORROW REQUEST ACTION HANDLING (ISSUE/REJECT) ---
+    // BORROW REQUEST ACTION HANDLING (ISSUE/REJECT)
     if(isset($_GET['req_id']) && isset($_GET['action']) && isset($_GET['bookid'])) {
         $requestId = intval($_GET['req_id']);
         $bookId = intval($_GET['bookid']);
@@ -120,8 +119,6 @@ else {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Manage Borrow Requests</title>
-    <!-- CSS Links -->
-    <link href="assets/css/font-awesome.css" rel="stylesheet" /> 
     <link href="assets/css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -385,7 +382,6 @@ else {
                     confirmBody.innerHTML = `Are you sure you want to ${verbText} the request for the book: <strong>${title}</strong>? This action is permanent.`;
                     
                     // Update Confirmation Link and Button Style
-                    // Note the URL includes bookid, req_id, and action for PHP processing
                     confirmLink.href = `manage-borrow-requests.php?req_id=${id}&action=${action}&bookid=${bookid}`;
                     confirmBtn.className = `btn-modal-confirm ${colorClass}`;
 
