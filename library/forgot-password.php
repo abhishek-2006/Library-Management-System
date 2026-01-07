@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(0);
 require('includes/config.php'); 
 
@@ -7,7 +6,6 @@ $error_message = "";
 $success_message = "";
 
 if(isset($_POST['change'])) {
-    // PHP LOGIC STARTS HERE (Your approved data verification logic)
     
     // Check for captcha verification
     if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='') {
@@ -15,7 +13,6 @@ if(isset($_POST['change'])) {
     } else {
         $email=$_POST['email'];
         $mobile=$_POST['mobile'];
-        // Ensure new password is HASHED using MD5 to match your existing system
         $newpassword=md5($_POST['newpassword']);
 
         // Check if Email and Mobile match a student record

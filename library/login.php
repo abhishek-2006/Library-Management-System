@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(0);
 require('includes/config.php'); 
 
@@ -17,9 +16,8 @@ if(isset($_POST['login'])) {
     if ($_POST["vercode"] != $_SESSION["vercode"] OR $_SESSION["vercode"]=='') {
         echo "<script>alert('Incorrect verification code');</script>" ;
     } else {
-        // *** USING PLAINTEXT PASSWORD INPUT FOR SIMPLICITY ***
         $login_input = $_POST['emailid']; 
-        $password = $_POST['password']; 
+        $password = md5($_POST['password']); 
 
         // 2. CHECK FOR ADMIN CREDENTIALS (tbladmin)
         $sqlAdmin = "SELECT AdminUserName FROM tbladmin WHERE AdminUserName=:login_input AND Password=:password";
@@ -34,7 +32,6 @@ if(isset($_POST['login'])) {
             echo "<script type='text/javascript'> document.location ='admin/dashboard.php'; </script>";
         } else {
             // 3. CHECK FOR STUDENT CREDENTIALS (tblstudents)
-            // *** DUAL CHECK: EITHER EmailId OR StudentId ***
             $sqlStudent = "SELECT id, StudentId, Status, FullName FROM tblstudents WHERE (EmailId=:login_input OR StudentId=:login_input) AND Password=:password";
             
             $queryStudent = $dbh->prepare($sqlStudent);
@@ -51,7 +48,7 @@ if(isset($_POST['login'])) {
 
                     if($result->Status == 1) {  
                         $_SESSION['db_id'] = $result->id;
-                        $_SESSION['login'] = $result->FullName; // Use FullName as the 'login' display name
+                        $_SESSION['login'] = $result->FullName;
                         echo "<script type='text/javascript'> document.location ='dashboard.php'; </script>";
                     } else {
                         // Account Blocked
@@ -60,7 +57,7 @@ if(isset($_POST['login'])) {
                 }
             } else {
                 // 4. FAILED LOGIN (No match in either table)
-                echo "<script>alert('Invalid Details (Username/Email/Student ID and Password).');</script>";
+                echo "<script>alert('Invalid Details (Username/Email/Student ID or Password).');</script>";
             }
         }
     }

@@ -1,11 +1,7 @@
 <?php
-// Set error reporting to catch fatal errors that cause blank pages
 error_reporting(0);
 ini_set('display_errors', 1);
 
-session_start();
-
-// --- Configuration and Database Connection ---
 require('includes/config.php');
 
 // --- Authentication Check ---
@@ -15,7 +11,7 @@ if(strlen($_SESSION['login'])==0) {
 } else {
     $sid = $_SESSION['stdid'];
     $currentPage = 'issued-books.php';
-    $finePerDay = 0.50; // Library Policy: Example rate for fine calculation
+    $finePerDay = 0.50;
 
     // Query to fetch currently issued books and history 
     $sql = "SELECT 

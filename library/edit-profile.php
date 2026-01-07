@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -11,9 +10,8 @@ if(strlen($_SESSION['login'])==0){
 $sid = $_SESSION['stdid'];
 $msg = $error = "";
 
-// =======================
 // FETCH USER DETAILS
-// =======================
+
 $sql = "SELECT StudentId, FullName, EmailId, MobileNumber FROM tblstudents WHERE StudentId=:sid";
 $query = $dbh->prepare($sql);
 $query->bindParam(':sid', $sid, PDO::PARAM_STR);
@@ -24,9 +22,8 @@ if(!$user){
     die("Error: Unable to load profile data.");
 }
 
-// =======================
 // UPDATE PROFILE
-// =======================
+
 if(isset($_POST['updateProfile'])){
     $fname  = $_POST['fullname'];
     $mobile = $_POST['mobileno'];
@@ -69,11 +66,8 @@ if(isset($_POST['updateProfile'])){
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Edit Profile</title>
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>

@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php'); 
 
@@ -51,7 +50,6 @@ if(strlen($_SESSION['login'])==0) {
     <title>Modern LMS | Student Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="assets/css/style.css"/>    
-    <link href="assets/css/font-awesome.css" rel="stylesheet" />
 </head>
 <body>
     <?php include('includes/header.php');?>

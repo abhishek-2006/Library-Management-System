@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(0);
 require('includes/config.php');
 
@@ -29,12 +28,10 @@ if(strlen($_SESSION['login'])==0) {
     if(isset($_POST['change'])) {
         
         // --- SECURITY & SANITIZATION ---
-        $currentPassword = trim($_POST['currentpassword']);
-        $newPassword = trim($_POST['newpassword']);
-        $confirmPassword = trim($_POST['confirmpassword']);
-        // ---------------------------------
+        $currentPassword = md5($_POST['currentpassword']);
+        $newPassword = md5($_POST['newpassword']);
+        $confirmPassword = md5($_POST['confirmpassword']);
 
-        // Input validation (Client-side validation handles matching, but good to check here)
         if ($newPassword !== $confirmPassword) {
             $error = "New password and Confirm password do not match.";
         } 

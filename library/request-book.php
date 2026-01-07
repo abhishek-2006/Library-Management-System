@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(0);
 require('includes/config.php');
 
@@ -30,7 +29,6 @@ if(strlen($_SESSION['login'])==0) {
             $bookISBN = htmlentities($bookISBN);
             $reason = htmlentities($reason);
 
-            // 🔑 UPDATED SQL: Include the new 'publisher' column
             $sql = "INSERT INTO tblbookrequests (studentID, bookTitle, bookAuthor, publisher, bookISBN, reason) VALUES (:sid, :title, :author, :publisher, :isbn, :reason)";
             $query = $dbh->prepare($sql);
             

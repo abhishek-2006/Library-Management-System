@@ -1,5 +1,4 @@
 <?php 
-session_start();
 require('includes/config.php');
 error_reporting(0);
 
@@ -20,7 +19,7 @@ if(isset($_POST['signup'])) {
         $fname=$_POST['fullname'];
         $mobileno=$_POST['mobileno'];
         $email=$_POST['email']; 
-        $password=($_POST['password']); 
+        $password=md5($_POST['password']); 
         $status=1;
         
         // Database insertion using PDO
@@ -47,7 +46,6 @@ if(isset($_POST['signup'])) {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -63,9 +61,9 @@ if(isset($_POST['signup'])) {
             theme: {
                 extend: {
                     colors: {
-                        'primary-indigo': '#4338CA', // Deep Indigo for main color
-                        'accent-orange': '#F59E0B', // Bright Orange for highlights
-                        'danger-red': '#EF4444', // Red for errors/buttons
+                        'primary-indigo': '#4338CA',
+                        'accent-orange': '#F59E0B',
+                        'danger-red': '#EF4444',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -168,7 +166,7 @@ if(isset($_POST['signup'])) {
                     </div>
                     
                     <button type="submit" name="signup" class="w-full py-3 px-4 bg-danger-red text-white font-bold text-lg rounded-lg shadow-xl hover:bg-red-600 transition duration-300 transform hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-red-300" id="submit">
-                        Register Now 🚀
+                        Register Now
                     </button>
 
                     <div class="text-center pt-3">

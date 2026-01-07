@@ -1,5 +1,4 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
@@ -43,9 +42,8 @@ try {
     $error = "A server error occurred while loading your profile.";
 }
 
-/* Fine rate - numeric for calculations and formatted for display */
-$fineRatePerDay = 10;                 // numeric rupees/day
-$fineRate = '₹' . number_format($fineRatePerDay, 2); // formatted display
+$fineRatePerDay = 10;
+$fineRate = '₹' . number_format($fineRatePerDay, 2);
 
 $fineResults = [];
 if (isset($_GET['view']) && $_GET['view'] === 'fine') {
@@ -85,7 +83,7 @@ if (isset($_GET['view']) && $_GET['view'] === 'fine') {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="assets/css/style.css"/>
     
-    <!-- Custom CSS for Navigation and Responsive Table -->
+    <!-- CSS for Navigation and Responsive Table -->
     <style>
         .profile-nav-tabs {
             display: flex;

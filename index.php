@@ -1,9 +1,6 @@
 <?php
-session_start();
 error_reporting(0);
 require('library/includes/config.php'); 
-
-// Color definitions are kept for the footer and visual consistency
 ?>
 <!DOCTYPE html>
 <html lang="en">

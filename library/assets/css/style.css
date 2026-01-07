@@ -1,7 +1,4 @@
-﻿/* =================================================================
-    GLOBAL VARIABLES & RESET
-   ================================================================= */
-:root {
+﻿:root {
     /* Color Palette */
     --primary-indigo: #4f46e5;      /* Main brand color */
     --info-blue: #3B82F6;           /* Info card/state */
@@ -30,7 +27,6 @@
 body {
     font-family: "Inter", "Segoe UI", Roboto, sans-serif;
     margin: 0;
-    /* Subtle, soft gradient background for the body */
     background: linear-gradient(180deg, #eef2ff 0%, #f9fafb 50%, #f9fafb 100%); 
     color: var(--text-dark);
     display: flex;
@@ -42,17 +38,15 @@ body {
 .content-wrapper { 
     flex-grow: 1; 
     padding: 2.5rem 0; 
-    background: var(--bg-light); /* Ensure content area is light */
+    background: var(--bg-light);
 }
 .container-custom { 
-    max-width: 1300px; /* Wider container for modern look */
+    max-width: 1300px;
     margin: 0 auto; 
     padding: 0 15px; 
 }
 
-/* =================================================================
-    HEADER & NAVIGATION
-   ================================================================= */
+/* HEADER & NAVIGATION */
 .main-header {
     position: sticky;
     top: 0;

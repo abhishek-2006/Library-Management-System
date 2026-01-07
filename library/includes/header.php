@@ -1,12 +1,10 @@
 <?php 
-// Function to check if a link is active (Requires $currentPage to be set in PHP)
+// Function to check if a link is active
 function isActive($link) {
     // Check global variable $currentPage (set in the calling file) or direct script name
     $currentFile = basename($_SERVER['PHP_SELF']);
     return (isset($GLOBALS['currentPage']) && $GLOBALS['currentPage'] === $link) || ($currentFile === $link) ? 'active-link' : '';
 }
-
-// NOTE: The $currentPage variable should be defined in the PHP file calling this header (e.g., dashboard.php)
 ?>
 
 <header class="main-header">
@@ -18,7 +16,7 @@ function isActive($link) {
             <?php if(isset($_SESSION['login']) && $_SESSION['login']) { ?>
                 <span class="user-greeting">
                     Hi, 
-                    <span class="user-name-display"><?php echo htmlentities($_SESSION['fname']); ?></span> 👋
+                    <span class="user-name-display"><?php echo htmlentities($_SESSION['fname']); ?></span>
                 </span>
                 <a href="logout.php" class="logout-btn"><i class="fa fa-sign-out"></i> Logout</a>
             <?php } else { ?>

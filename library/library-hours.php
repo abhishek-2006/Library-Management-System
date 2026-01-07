@@ -1,9 +1,7 @@
 <?php
-session_start();
 error_reporting(0);
 require('includes/config.php'); 
 
-// Ensure only logged-in students can view this page
 if(strlen($_SESSION['login'])==0) { 
     header('location:../index.php');
     exit(); 
@@ -11,7 +9,6 @@ if(strlen($_SESSION['login'])==0) {
     $currentPage = 'library-hours.php'; 
 
     // --- FETCH LIBRARY HOURS FROM DB ---
-    // Reads data from the tbllibrarysettings table using the keys inserted by the SQL script
     $sql = "SELECT SettingName, SettingValue FROM tbllibrarysettings WHERE SettingName IN ('hours_mon_fri', 'hours_saturday', 'closed_note')";
     $query = $dbh->prepare($sql);
     $query->execute();

@@ -1,9 +1,7 @@
 <?php
-session_start();
 error_reporting(E_ALL);
 require('includes/config.php');
 
-// Initialize variables
 $bookid = 0;
 $request_message = "";
 $result = null;
@@ -27,12 +25,12 @@ if (isset($_GET['bookid']) && !empty($_GET['bookid'])) {
     // Handle case where book is not found
     if (!$result) {
         // Redirect to book catalog or a 404 page
-        header('Location: index.php');
+        header('Location: dashboard.php');
         exit;
     }
 } else {
     // No book ID provided, redirect
-    header('Location: index.php');
+    header('Location: dashboard.php');
     exit;
 }
 
